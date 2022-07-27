@@ -1,12 +1,16 @@
 import { useCallback, useRef } from "react";
 import "./App.css";
+import { useCanvasReducer } from "./store/CanvasReducer";
 
 const ASPECT_RATIO = 16 / 9;
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = Math.ceil(CANVAS_WIDTH / ASPECT_RATIO);
 
 function App() {
+  const [state, dispatch] = useCanvasReducer();
+
   const svgRef = useRef<SVGSVGElement>(null);
+  const draggedElement = useRef<HTMLElement>();
 
   const getMousePosition = useCallback(
     (e: React.MouseEvent) => {
@@ -19,7 +23,12 @@ function App() {
     [svgRef]
   );
 
-  const onClick = useCallback((e: React.MouseEvent) => {
+  const onDragStart = useCallback((e: React.MouseEvent) => {
+    const coords = getMousePosition(e);
+    console.log(coords);
+  }, []);
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
     const coords = getMousePosition(e);
     console.log(coords);
   }, []);
@@ -33,9 +42,18 @@ function App() {
         id="canvas"
         width={CANVAS_WIDTH}
         height={CANVAS_HEIGHT}
+        onMouseMove={onMouseMove}
       >
-        <circle cx="50" cy="50" r="25" className="circle" onClick={onClick} />
-        <circle cx="130" cy="80" r="25" className="circle" onClick={onClick} />
+        {state.shapes.map((shape) => (
+          <circle
+            key={shape.id}
+            cx={shape.x}
+            cy={shape.y}
+            r={25}
+            className="circle"
+            onClick={onDragStart}
+          />
+        ))}
       </svg>
     </div>
   );
