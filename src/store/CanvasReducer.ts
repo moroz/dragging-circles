@@ -11,4 +11,10 @@ export const CanvasReducer: Reducer<CanvasReducerState, any> = (
   }
 };
 
-export const useCanvasReducer = () => useReducer(CanvasReducer, initialState);
+export const useCanvasReducer = () => {
+  const [state, dispatch] = useReducer(CanvasReducer, initialState);
+
+  return {
+    state
+  };
+};
