@@ -39,3 +39,11 @@
 .read-the-docs {
   color: #888;
 }
+
+svg#canvas {
+  background: pink;
+}
+
+.circle {
+  fill: blue;
+}
