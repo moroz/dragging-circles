@@ -66,8 +66,8 @@ function App() {
         xmlns="http://www.w3.org/2000/svg"
         viewBox={`0 0 ${CANVAS_WIDTH} ${CANVAS_HEIGHT}`}
         id="canvas"
-        width="100vmin"
-        height={`${100 / ASPECT_RATIO}vmin`}
+        width="80vmax"
+        height={`${80 / ASPECT_RATIO}vmax`}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
       >
