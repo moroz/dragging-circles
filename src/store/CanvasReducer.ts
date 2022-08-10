@@ -1,5 +1,6 @@
 import { Reducer, useCallback, useReducer } from "react";
 import { ID } from "../interfaces/common";
+import { Exhibition } from "../interfaces/exhibitions";
 import {
   CanvasReducerAction,
   CanvasReducerActionType
@@ -11,17 +12,29 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
   action
 ) => {
   switch (action.type) {
-    case CanvasReducerActionType.DragElement:
+    case CanvasReducerActionType.Loaded: {
       return {
         ...state,
-        shapes: state.shapes.map((shape) => {
-          if (String(shape.id) !== String(action.id)) return shape;
-          return {
-            ...shape,
-            x: action.x,
-            y: action.y
-          };
-        })
+        exhibition: action.data
+      };
+    }
+
+    case CanvasReducerActionType.DragElement:
+      if (!state.exhibition) return state;
+
+      return {
+        ...state,
+        exhibition: {
+          ...state.exhibition,
+          artworks: state.exhibition?.artworks.map((shape) => {
+            if (String(shape.id) !== String(action.id)) return shape;
+            return {
+              ...shape,
+              x: Math.round(action.x),
+              y: Math.round(action.y)
+            };
+          })
+        }
       };
 
     default:
@@ -31,6 +44,16 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
 
 export const useCanvasReducer = () => {
   const [state, dispatch] = useReducer(CanvasReducer, initialState);
+
+  const reset = useCallback(
+    (exhibition: Exhibition) => {
+      dispatch({
+        type: CanvasReducerActionType.Loaded,
+        data: exhibition
+      });
+    },
+    [dispatch]
+  );
 
   const moveElement = useCallback(
     (id: ID, x: number, y: number) => {
@@ -46,6 +69,7 @@ export const useCanvasReducer = () => {
 
   return {
     state,
-    moveElement
+    moveElement,
+    reset
   };
 };
