@@ -1,13 +1,7 @@
-import { ID } from "../interfaces/common";
-
-export interface CanvasShape {
-  id: ID;
-  x: number;
-  y: number;
-}
+import { Artwork } from "../interfaces/artwork";
 
 export interface CanvasReducerState {
-  shapes: CanvasShape[];
+  shapes: Artwork[];
 }
 
 export const initialState: CanvasReducerState = {

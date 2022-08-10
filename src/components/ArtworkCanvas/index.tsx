@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useGetExhibitionQuery } from "../../gql/queries/ExhibitionQueries";
+import { Artwork } from "../../interfaces/artwork";
 import { ID } from "../../interfaces/common";
 import { useCanvasReducer } from "../../store/CanvasReducer";
-import { CanvasShape } from "../../store/CanvasReducerState";
 
 const ASPECT_RATIO = 16 / 9;
 const CANVAS_WIDTH = 800;
@@ -37,7 +37,7 @@ function ArtworkCanvas() {
   );
 
   const onDragStart = useCallback(
-    (shape: CanvasShape) => (e: React.MouseEvent) => {
+    (shape: Artwork) => (e: React.MouseEvent) => {
       const coords = getMousePosition(e);
       draggedElement.current = {
         id: shape.id,
@@ -87,9 +87,13 @@ function ArtworkCanvas() {
             className="circle"
             onMouseDown={onDragStart(shape)}
             onMouseUp={onDragEnd}
-          />
+          >
+            <title>{shape.title}</title>
+          </circle>
         ))}
       </svg>
+
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   );
 }

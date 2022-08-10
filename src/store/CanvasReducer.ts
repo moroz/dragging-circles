@@ -1,14 +1,11 @@
 import { Reducer, useCallback, useReducer } from "react";
+import { Artwork } from "../interfaces/artwork";
 import { ID } from "../interfaces/common";
 import {
   CanvasReducerAction,
   CanvasReducerActionType
 } from "./CanvasReducerAction";
-import {
-  CanvasReducerState,
-  CanvasShape,
-  initialState
-} from "./CanvasReducerState";
+import { CanvasReducerState, initialState } from "./CanvasReducerState";
 
 export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
   state,
@@ -29,8 +26,8 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
           if (String(shape.id) !== String(action.id)) return shape;
           return {
             ...shape,
-            x: action.x,
-            y: action.y
+            x: Math.round(action.x),
+            y: Math.round(action.y)
           };
         })
       };
@@ -44,7 +41,7 @@ export const useCanvasReducer = () => {
   const [state, dispatch] = useReducer(CanvasReducer, initialState);
 
   const reset = useCallback(
-    (shapes: CanvasShape[]) => {
+    (shapes: Artwork[]) => {
       dispatch({
         type: CanvasReducerActionType.Loaded,
         data: shapes
