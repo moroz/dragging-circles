@@ -4,13 +4,24 @@ import {
   CanvasReducerAction,
   CanvasReducerActionType
 } from "./CanvasReducerAction";
-import { CanvasReducerState, initialState } from "./CanvasReducerState";
+import {
+  CanvasReducerState,
+  CanvasShape,
+  initialState
+} from "./CanvasReducerState";
 
 export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
   state,
   action
 ) => {
   switch (action.type) {
+    case CanvasReducerActionType.Loaded: {
+      return {
+        ...state,
+        shapes: action.data
+      };
+    }
+
     case CanvasReducerActionType.DragElement:
       return {
         ...state,
@@ -32,6 +43,16 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
 export const useCanvasReducer = () => {
   const [state, dispatch] = useReducer(CanvasReducer, initialState);
 
+  const reset = useCallback(
+    (shapes: CanvasShape[]) => {
+      dispatch({
+        type: CanvasReducerActionType.Loaded,
+        data: shapes
+      });
+    },
+    [dispatch]
+  );
+
   const moveElement = useCallback(
     (id: ID, x: number, y: number) => {
       dispatch({
@@ -46,6 +67,7 @@ export const useCanvasReducer = () => {
 
   return {
     state,
-    moveElement
+    moveElement,
+    reset
   };
 };

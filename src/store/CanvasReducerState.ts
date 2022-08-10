@@ -11,8 +11,5 @@ export interface CanvasReducerState {
 }
 
 export const initialState: CanvasReducerState = {
-  shapes: [
-    { id: 1, x: 50, y: 50 },
-    { id: 2, x: 130, y: 80 }
-  ]
+  shapes: []
 };

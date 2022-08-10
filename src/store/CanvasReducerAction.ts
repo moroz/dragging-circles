@@ -1,9 +1,11 @@
 import { ID } from "../interfaces/common";
+import { CanvasShape } from "./CanvasReducerState";
 
 export enum CanvasReducerActionType {
   AddElement,
   RemoveElement,
-  DragElement
+  DragElement,
+  Loaded
 }
 
 export interface AddElementAction {
@@ -24,7 +26,13 @@ export interface DragElementAction {
   y: number;
 }
 
+export interface LoadedAction {
+  type: CanvasReducerActionType.Loaded;
+  data: CanvasShape[];
+}
+
 export type CanvasReducerAction =
   | AddElementAction
   | RemoveElementAction
-  | DragElementAction;
+  | DragElementAction
+  | LoadedAction;
