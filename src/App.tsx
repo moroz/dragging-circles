@@ -2,11 +2,17 @@ import { ApolloProvider } from "@apollo/client";
 import "./App.css";
 import ArtworkCanvas from "./components/ArtworkCanvas";
 import client from "./gql/client";
+import { useCanvasReducer } from "./store/CanvasReducer";
+import CanvasReducerContext from "./store/CanvasReducerContext";
 
 function App() {
+  const contextValue = useCanvasReducer();
+
   return (
     <ApolloProvider client={client}>
-      <ArtworkCanvas />
+      <CanvasReducerContext.Provider value={contextValue}>
+        <ArtworkCanvas />
+      </CanvasReducerContext.Provider>
     </ApolloProvider>
   );
 }
