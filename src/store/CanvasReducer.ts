@@ -15,21 +15,26 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
     case CanvasReducerActionType.Loaded: {
       return {
         ...state,
-        shapes: action.data
+        exhibition: action.data
       };
     }
 
     case CanvasReducerActionType.DragElement:
+      if (!state.exhibition) return state;
+
       return {
         ...state,
-        shapes: state.shapes.map((shape) => {
-          if (String(shape.id) !== String(action.id)) return shape;
-          return {
-            ...shape,
-            x: Math.round(action.x),
-            y: Math.round(action.y)
-          };
-        })
+        exhibition: {
+          ...state.exhibition,
+          artworks: state.exhibition?.artworks.map((shape) => {
+            if (String(shape.id) !== String(action.id)) return shape;
+            return {
+              ...shape,
+              x: Math.round(action.x),
+              y: Math.round(action.y)
+            };
+          })
+        }
       };
 
     default:

@@ -1,9 +1,9 @@
-import { Artwork } from "../interfaces/artwork";
+import { Exhibition } from "../interfaces/exhibitions";
 
 export interface CanvasReducerState {
-  shapes: Artwork[];
+  exhibition: Exhibition | null;
 }
 
 export const initialState: CanvasReducerState = {
-  shapes: []
+  exhibition: null
 };

@@ -1,5 +1,5 @@
 import { ID } from "../interfaces/common";
-import { CanvasShape } from "./CanvasReducerState";
+import { Exhibition } from "../interfaces/exhibitions";
 
 export enum CanvasReducerActionType {
   AddElement,
@@ -28,7 +28,7 @@ export interface DragElementAction {
 
 export interface LoadedAction {
   type: CanvasReducerActionType.Loaded;
-  data: CanvasShape[];
+  data: Exhibition;
 }
 
 export type CanvasReducerAction =

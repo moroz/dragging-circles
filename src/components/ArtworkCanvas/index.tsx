@@ -14,7 +14,7 @@ function ArtworkCanvas() {
     useDraggableCanvas();
 
   useEffect(() => {
-    if (data?.getExhibition?.artworks) reset(data.getExhibition?.artworks);
+    if (data?.getExhibition) reset(data.getExhibition);
   }, [loading, data]);
 
   if (loading) return <div className="App" />;
@@ -31,7 +31,7 @@ function ArtworkCanvas() {
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
       >
-        {state.shapes.map((shape) => (
+        {state.exhibition?.artworks.map((shape) => (
           <circle
             key={shape.id}
             cx={shape.x}
