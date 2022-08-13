@@ -10,8 +10,14 @@ const CANVAS_HEIGHT = Math.ceil(CANVAS_WIDTH / ASPECT_RATIO);
 function ArtworkCanvas() {
   const { data, loading } = useGetExhibitionQuery(1);
   const { state, reset } = useCanvasReducerContext();
-  const { onDragStart, onDragEnd, onMouseMove, onMouseLeave, svgRef } =
-    useDraggableCanvas();
+  const {
+    onDragStart,
+    onDragEnd,
+    onMouseMove,
+    onMouseLeave,
+    svgRef,
+    saveLayout
+  } = useDraggableCanvas();
 
   useEffect(() => {
     if (data?.getExhibition) reset(data.getExhibition);
@@ -45,6 +51,9 @@ function ArtworkCanvas() {
           </circle>
         ))}
       </svg>
+      <button type="button" onClick={saveLayout} disabled={!state.dirty}>
+        Save layout
+      </button>
 
       <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>

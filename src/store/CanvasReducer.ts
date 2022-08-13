@@ -15,7 +15,8 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
     case CanvasReducerActionType.Loaded: {
       return {
         ...state,
-        exhibition: action.data
+        exhibition: action.data,
+        dirty: false
       };
     }
 
@@ -24,6 +25,7 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
 
       return {
         ...state,
+        dirty: true,
         exhibition: {
           ...state.exhibition,
           artworks: state.exhibition?.artworks.map((shape) => {
@@ -45,27 +47,21 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
 export const useCanvasReducer = () => {
   const [state, dispatch] = useReducer(CanvasReducer, initialState);
 
-  const reset = useCallback(
-    (exhibition: Exhibition) => {
-      dispatch({
-        type: CanvasReducerActionType.Loaded,
-        data: exhibition
-      });
-    },
-    [dispatch]
-  );
+  const reset = useCallback((exhibition: Exhibition) => {
+    dispatch({
+      type: CanvasReducerActionType.Loaded,
+      data: exhibition
+    });
+  }, []);
 
-  const moveElement = useCallback(
-    (id: ID, x: number, y: number) => {
-      dispatch({
-        type: CanvasReducerActionType.DragElement,
-        id,
-        x,
-        y
-      });
-    },
-    [dispatch]
-  );
+  const moveElement = useCallback((id: ID, x: number, y: number) => {
+    dispatch({
+      type: CanvasReducerActionType.DragElement,
+      id,
+      x,
+      y
+    });
+  }, []);
 
   return {
     state,

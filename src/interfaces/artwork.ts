@@ -10,3 +10,9 @@ export interface Artwork {
   insertedAt: string;
   updatedAt: string;
 }
+
+export interface ArtworkShapeInput {
+  id: ID;
+  x: number;
+  y: number;
+}

@@ -1,4 +1,5 @@
 import { useRef, useCallback } from "react";
+import { useSaveArtworkLayoutMutation } from "../gql/mutations/ExhibitionMutations";
 import { Artwork } from "../interfaces/artwork";
 import { ID } from "../interfaces/common";
 import { useCanvasReducerContext } from "../store/CanvasReducerContext";
@@ -11,6 +12,7 @@ export interface DraggingState {
 
 export default function useDraggableCanvas() {
   const { state, moveElement } = useCanvasReducerContext();
+  const [saveMutation] = useSaveArtworkLayoutMutation();
 
   const svgRef = useRef<SVGSVGElement>(null);
   const draggedElement = useRef<DraggingState>();
@@ -54,11 +56,26 @@ export default function useDraggableCanvas() {
     draggedElement.current = undefined;
   }, [draggedElement]);
 
+  const saveLayout = async () => {
+    if (!state.exhibition?.artworks) return;
+    saveMutation({
+      variables: {
+        exhibitionId: state.exhibition.id,
+        shapes: state.exhibition?.artworks.map((art) => ({
+          id: art.id,
+          x: art.x,
+          y: art.y
+        }))
+      }
+    });
+  };
+
   return {
     onDragEnd,
     onDragStart,
     onMouseLeave,
     onMouseMove,
-    svgRef
+    svgRef,
+    saveLayout
   };
 }
