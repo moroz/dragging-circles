@@ -42,7 +42,7 @@ function ArtworkCanvas() {
             cx={shape.x}
             cy={shape.y}
             r={25}
-            className="circle"
+            className={styles.circle}
             onMouseDown={onDragStart(shape)}
             onMouseUp={onDragEnd}
           >

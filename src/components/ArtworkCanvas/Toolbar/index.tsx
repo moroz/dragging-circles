@@ -18,21 +18,36 @@ const Toolbar: React.FC<Props> = ({ onReset }) => {
   return (
     <div className={styles.toolbar}>
       {canDrag ? (
-        <button type="button" onClick={startDragging} disabled={!canDrag}>
+        <button
+          type="button"
+          onClick={startDragging}
+          disabled={!canDrag}
+          className="button"
+        >
           開啓拖拉
         </button>
       ) : null}
       {state.mode === CanvasReducerMode.Moving ? (
-        <button type="button" onClick={onReset}>
+        <button type="button" onClick={onReset} className="button is-danger">
           捨棄更改
         </button>
       ) : null}
       {state.mode === CanvasReducerMode.Moving ? (
-        <button type="button" onClick={saveLayout} disabled={!state.dirty}>
+        <button
+          type="button"
+          onClick={saveLayout}
+          disabled={!state.dirty}
+          className="button is-success"
+        >
           儲存佈局
         </button>
       ) : null}
-      <button type="button" onClick={toggleCreating} disabled={state.dirty}>
+      <button
+        type="button"
+        onClick={toggleCreating}
+        disabled={state.dirty}
+        className="button is-success"
+      >
         {state.mode === CanvasReducerMode.Creating ? "取消新增" : "新增藝品"}
       </button>
     </div>

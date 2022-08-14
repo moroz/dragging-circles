@@ -1,5 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
-import "./App.css";
+import "./css/app.sass";
 import ArtworkCanvas from "./components/ArtworkCanvas";
 import client from "./gql/client";
 import { useCanvasReducer } from "./store/CanvasReducer";
