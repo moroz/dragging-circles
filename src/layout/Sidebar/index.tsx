@@ -1,7 +1,6 @@
 import useAuth from "../../hooks/useAuth";
 import styles from "../Layout.module.sass";
 import { Link } from "react-router-dom";
-import CurrentUser from "./CurrentUser";
 import { APP_NAME, APP_LONG_NAME } from "../../config";
 import SidebarLink from "./SidebarLink";
 
@@ -17,9 +16,6 @@ const Sidebar = () => {
       <nav>
         <SidebarLink to="/">編輯藝術作品</SidebarLink>
       </nav>
-      <section className={styles.userSection}>
-        <CurrentUser />
-      </section>
       <button onClick={signOut} className={styles.logout}>
         登出
       </button>

@@ -3,8 +3,8 @@ import { ID } from "../../interfaces/common";
 import { Exhibition } from "../../interfaces/exhibitions";
 
 export const GET_EXHIBITION_QUERY = gql`
-  query GetExhibition($id: ID!) {
-    getExhibition(id: $id) {
+  query GetExhibition {
+    getExhibition: getActiveExhibition {
       id
       title
       artworks {
