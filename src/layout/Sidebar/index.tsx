@@ -11,12 +11,11 @@ const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
       <Link to="/" className={styles.title}>
-        <h1 className="title">{APP_LONG_NAME}</h1>
-        <h2 className="subtitle">{APP_NAME}</h2>
+        <h1 className="title">{APP_NAME}</h1>
+        <h2 className="subtitle">{APP_LONG_NAME}</h2>
       </Link>
       <nav>
-        <SidebarLink to="/">官網部署狀態</SidebarLink>
-        <SidebarLink to="/import">匯入文章資料</SidebarLink>
+        <SidebarLink to="/">編輯藝術作品</SidebarLink>
       </nav>
       <section className={styles.userSection}>
         <CurrentUser />

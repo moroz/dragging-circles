@@ -5,7 +5,6 @@ import Loader from "./Loader";
 import styles from "./Layout.module.sass";
 import Sidebar from "./Sidebar";
 import { Helmet } from "react-helmet";
-import FlashMessage from "./FlashMessage";
 import clsx from "clsx";
 import { APP_NAME } from "../config";
 
@@ -66,9 +65,6 @@ const Layout: React.FC<Props> = ({
             {actions ? <div className={styles.actions}>{actions}</div> : null}
           </header>
         ) : null}
-        {messages.map((msg, i) => (
-          <FlashMessage key={i} {...msg} />
-        ))}
         {children}
       </main>
     </div>
