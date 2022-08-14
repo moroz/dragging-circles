@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useGetExhibitionQuery } from "../../gql/queries/ExhibitionQueries";
 import { useCanvasReducerContext } from "../../store/CanvasReducerContext";
 import useDraggableCanvas from "../../hooks/useDraggableCanvas";
+import Toolbar from "./Toolbar";
 
 const ASPECT_RATIO = 16 / 9;
 const CANVAS_WIDTH = 800;
@@ -10,20 +11,14 @@ const CANVAS_HEIGHT = Math.ceil(CANVAS_WIDTH / ASPECT_RATIO);
 function ArtworkCanvas() {
   const { data, loading } = useGetExhibitionQuery(1);
   const { state, reset } = useCanvasReducerContext();
-  const {
-    onDragStart,
-    onDragEnd,
-    onMouseMove,
-    onMouseLeave,
-    svgRef,
-    saveLayout,
-    onClick,
-    onStartCreating
-  } = useDraggableCanvas();
+  const { onDragStart, onDragEnd, onMouseMove, onMouseLeave, svgRef, onClick } =
+    useDraggableCanvas();
 
-  useEffect(() => {
+  const onReset = useCallback(() => {
     if (data?.getExhibition) reset(data.getExhibition);
-  }, [loading, data]);
+  }, [data, reset]);
+
+  useEffect(onReset, [loading, data]);
 
   if (loading) return <div className="App" />;
 
@@ -54,12 +49,7 @@ function ArtworkCanvas() {
           </circle>
         ))}
       </svg>
-      <button type="button" onClick={saveLayout} disabled={!state.dirty}>
-        儲存佈局
-      </button>
-      <button type="button" onClick={onStartCreating} disabled={state.dirty}>
-        新增藝品
-      </button>
+      <Toolbar onReset={onReset} />
     </div>
   );
 }

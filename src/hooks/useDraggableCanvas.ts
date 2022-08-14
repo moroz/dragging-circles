@@ -6,6 +6,7 @@ import {
 import { Artwork } from "../interfaces/artwork";
 import { ID } from "../interfaces/common";
 import { useCanvasReducerContext } from "../store/CanvasReducerContext";
+import { CanvasReducerMode } from "../store/CanvasReducerState";
 
 export interface DraggingState {
   id: ID;
@@ -17,15 +18,9 @@ export default function useDraggableCanvas() {
   const { state, moveElement } = useCanvasReducerContext();
   const [saveMutation] = useSaveArtworkLayoutMutation();
   const [createArtwork] = useCreateArtworkMutation();
-  const [isCreatingMode, setIsCreatingMode] = useState(false);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const draggedElement = useRef<DraggingState>();
-
-  const onStartCreating = useCallback(() => {
-    if (state.dirty) return;
-    setIsCreatingMode((t) => !t);
-  }, [setIsCreatingMode]);
 
   const getMousePosition = useCallback(
     (e: React.MouseEvent) => {
@@ -40,7 +35,7 @@ export default function useDraggableCanvas() {
 
   const onDragStart = useCallback(
     (shape: Artwork) => (e: React.MouseEvent) => {
-      if (isCreatingMode) return;
+      if (state.mode !== CanvasReducerMode.Moving) return;
       const coords = getMousePosition(e);
       draggedElement.current = {
         id: shape.id,
@@ -48,7 +43,7 @@ export default function useDraggableCanvas() {
         offsetY: coords.y - shape.y
       };
     },
-    [state, isCreatingMode]
+    [state.mode]
   );
 
   const onDragEnd = useCallback(() => {
@@ -69,7 +64,7 @@ export default function useDraggableCanvas() {
 
   const onClick = useCallback(
     async (e: React.MouseEvent) => {
-      if (!isCreatingMode) return;
+      if (state.mode !== CanvasReducerMode.Creating) return;
 
       const { x, y } = getMousePosition(e);
       createArtwork({
@@ -82,7 +77,7 @@ export default function useDraggableCanvas() {
         }
       });
     },
-    [isCreatingMode]
+    [state.mode]
   );
 
   const saveLayout = async () => {
@@ -106,7 +101,6 @@ export default function useDraggableCanvas() {
     onMouseMove,
     onClick,
     svgRef,
-    saveLayout,
-    onStartCreating
+    saveLayout
   };
 }

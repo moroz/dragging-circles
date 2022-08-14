@@ -5,7 +5,9 @@ export enum CanvasReducerActionType {
   AddElement,
   RemoveElement,
   DragElement,
-  Loaded
+  Loaded,
+  StartDragging,
+  ToggleCreating
 }
 
 export interface AddElementAction {
@@ -31,8 +33,15 @@ export interface LoadedAction {
   data: Exhibition;
 }
 
+export interface SimpleAction {
+  type:
+    | CanvasReducerActionType.ToggleCreating
+    | CanvasReducerActionType.StartDragging;
+}
+
 export type CanvasReducerAction =
   | AddElementAction
   | RemoveElementAction
   | DragElementAction
-  | LoadedAction;
+  | LoadedAction
+  | SimpleAction;

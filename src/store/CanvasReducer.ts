@@ -5,7 +5,11 @@ import {
   CanvasReducerAction,
   CanvasReducerActionType
 } from "./CanvasReducerAction";
-import { CanvasReducerState, initialState } from "./CanvasReducerState";
+import {
+  CanvasReducerMode,
+  CanvasReducerState,
+  initialState
+} from "./CanvasReducerState";
 
 export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
   state,
@@ -16,7 +20,27 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
       return {
         ...state,
         exhibition: action.data,
-        dirty: false
+        dirty: false,
+        mode: CanvasReducerMode.Standby
+      };
+    }
+
+    case CanvasReducerActionType.StartDragging: {
+      return {
+        ...state,
+        dirty: false,
+        mode: CanvasReducerMode.Moving
+      };
+    }
+
+    case CanvasReducerActionType.ToggleCreating: {
+      return {
+        ...state,
+        dirty: false,
+        mode:
+          state.mode === CanvasReducerMode.Creating
+            ? CanvasReducerMode.Standby
+            : CanvasReducerMode.Creating
       };
     }
 
@@ -63,9 +87,27 @@ export const useCanvasReducer = () => {
     });
   }, []);
 
+  const startDragging = useCallback(() => {
+    if (state.dirty || state.mode === CanvasReducerMode.Moving) return;
+    dispatch({
+      type: CanvasReducerActionType.StartDragging
+    });
+  }, [state.mode, state.dirty]);
+
+  const toggleCreating = useCallback(() => {
+    if (state.dirty) return;
+    dispatch({
+      type: CanvasReducerActionType.ToggleCreating
+    });
+  }, [state.dirty]);
+
   return {
     state,
     moveElement,
-    reset
+    reset,
+    startDragging,
+    toggleCreating
   };
 };
+
+export type CanvasReducerContextValue = ReturnType<typeof useCanvasReducer>;
