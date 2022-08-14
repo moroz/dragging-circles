@@ -1,0 +1,56 @@
+@charset "utf-8"
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Open+Sans:wght@400;700&display=swap')
+
+@import rem_calc
+@import tw_palette
+@import mixins
+
+$family-custom: 'Open Sans'
+$family-cjk: 'Noto Sans TC'
+$family-sans-serif: $family-custom, BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif, $family-cjk
+$family-monospace: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace
+
+$notification-padding-ltr: .75rem 1rem
+$sidebar-width: rem-calc(300px)
+$sidebar-link-height: rem-calc(40px)
+$sidebar-base-padding: 1.25rem
+$sidebar-section-padding: 1rem
+
+$form-field-width: rem-calc(600px)
+$sidebar-bg: #fff
+$sidebar-fg: #222
+$cyan-200: #80deea
+$deep-purple-200: #b39ddb
+$green-200: #a5d6a7
+$blue-700: #1976d2
+$input-height: rem-calc(40px)
+$background-hover: $grey-lighter
+$primary: $blue-dark
+$danger: $red-dark
+$success: darken($green-dark, 5%)
+$text-strong: #333
+$text: #393939
+$link: $blue-dark
+$border: $grey
+$background: #f6f6f9
+
+$custom-control-size: 1.25rem
+
+$article-image-grid-size: rem-calc(300px)
+
+$crud-table-header-height: rem-calc(48px)
+$crud-table-row-height: rem-calc(52px)
+
+$article-card-width: rem-calc(300px)
+$article-landscape-card-width: rem-calc(400px)
+
+@import "../../node_modules/bulma/sass/utilities/_all.sass"
+
+$editor-toolbar-color: #f3f2f1
+$editor-button-height: 40px
+$editor-icon-height: 20px
+$editor-button-hover-bg: darken($editor-toolbar-color, 3%)
+$editor-button-active-bg: darken($editor-toolbar-color, 7%)
+
+$uploader-progress-bg: lighten($green, 25%)
+
