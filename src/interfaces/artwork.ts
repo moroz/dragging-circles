@@ -16,3 +16,12 @@ export interface ArtworkShapeInput {
   x: number;
   y: number;
 }
+
+export interface ArtworkInput {
+  author?: string;
+  body?: string;
+  title?: string;
+  x: number;
+  y: number;
+  exhibitionId: ID;
+}

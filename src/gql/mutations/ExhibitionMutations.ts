@@ -1,5 +1,9 @@
 import { gql, useMutation } from "@apollo/client";
-import { Artwork, ArtworkShapeInput } from "../../interfaces/artwork";
+import {
+  Artwork,
+  ArtworkInput,
+  ArtworkShapeInput
+} from "../../interfaces/artwork";
 import { ID, MutationResult } from "../../interfaces/common";
 
 export const SAVE_ARTWORK_LAYOUT_MUTATION = gql`
@@ -36,3 +40,36 @@ export const useSaveArtworkLayoutMutation = () =>
     SaveArtworkLayoutMutationResult,
     SaveArtworkLayoutMutationVariables
   >(SAVE_ARTWORK_LAYOUT_MUTATION);
+
+export const CREATE_ARTWORK_MUTATION = gql`
+  mutation CreateArtwork($params: ArtworkInput!) {
+    result: createArtwork(params: $params) {
+      success
+      errors {
+        key
+        message
+      }
+      data {
+        id
+        artworks {
+          id
+          x
+          y
+        }
+      }
+    }
+  }
+`;
+
+export interface CreateArtworkMutationResult {
+  result: MutationResult<Artwork>;
+}
+
+export interface CreateArtworkMutationVariables {
+  params: ArtworkInput;
+}
+
+export const useCreateArtworkMutation = () =>
+  useMutation<CreateArtworkMutationResult, CreateArtworkMutationVariables>(
+    CREATE_ARTWORK_MUTATION
+  );

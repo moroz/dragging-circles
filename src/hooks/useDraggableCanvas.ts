@@ -1,5 +1,8 @@
-import { useRef, useCallback } from "react";
-import { useSaveArtworkLayoutMutation } from "../gql/mutations/ExhibitionMutations";
+import { useRef, useCallback, useState } from "react";
+import {
+  useCreateArtworkMutation,
+  useSaveArtworkLayoutMutation
+} from "../gql/mutations/ExhibitionMutations";
 import { Artwork } from "../interfaces/artwork";
 import { ID } from "../interfaces/common";
 import { useCanvasReducerContext } from "../store/CanvasReducerContext";
@@ -13,9 +16,16 @@ export interface DraggingState {
 export default function useDraggableCanvas() {
   const { state, moveElement } = useCanvasReducerContext();
   const [saveMutation] = useSaveArtworkLayoutMutation();
+  const [createArtwork] = useCreateArtworkMutation();
+  const [isCreatingMode, setIsCreatingMode] = useState(false);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const draggedElement = useRef<DraggingState>();
+
+  const onStartCreating = useCallback(() => {
+    if (state.dirty) return;
+    setIsCreatingMode((t) => !t);
+  }, [setIsCreatingMode]);
 
   const getMousePosition = useCallback(
     (e: React.MouseEvent) => {
@@ -30,6 +40,7 @@ export default function useDraggableCanvas() {
 
   const onDragStart = useCallback(
     (shape: Artwork) => (e: React.MouseEvent) => {
+      if (isCreatingMode) return;
       const coords = getMousePosition(e);
       draggedElement.current = {
         id: shape.id,
@@ -37,7 +48,7 @@ export default function useDraggableCanvas() {
         offsetY: coords.y - shape.y
       };
     },
-    [state]
+    [state, isCreatingMode]
   );
 
   const onDragEnd = useCallback(() => {
@@ -55,6 +66,24 @@ export default function useDraggableCanvas() {
   const onMouseLeave = useCallback(() => {
     draggedElement.current = undefined;
   }, [draggedElement]);
+
+  const onClick = useCallback(
+    async (e: React.MouseEvent) => {
+      if (!isCreatingMode) return;
+
+      const { x, y } = getMousePosition(e);
+      createArtwork({
+        variables: {
+          params: {
+            exhibitionId: state.exhibition!.id,
+            x: Math.round(x),
+            y: Math.round(y)
+          }
+        }
+      });
+    },
+    [isCreatingMode]
+  );
 
   const saveLayout = async () => {
     if (!state.exhibition?.artworks) return;
@@ -75,7 +104,9 @@ export default function useDraggableCanvas() {
     onDragStart,
     onMouseLeave,
     onMouseMove,
+    onClick,
     svgRef,
-    saveLayout
+    saveLayout,
+    onStartCreating
   };
 }

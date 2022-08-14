@@ -16,7 +16,9 @@ function ArtworkCanvas() {
     onMouseMove,
     onMouseLeave,
     svgRef,
-    saveLayout
+    saveLayout,
+    onClick,
+    onStartCreating
   } = useDraggableCanvas();
 
   useEffect(() => {
@@ -35,6 +37,7 @@ function ArtworkCanvas() {
         width="100vmin"
         height={`${100 / ASPECT_RATIO}vmin`}
         onMouseMove={onMouseMove}
+        onClick={onClick}
         onMouseLeave={onMouseLeave}
       >
         {state.exhibition?.artworks.map((shape) => (
@@ -52,10 +55,11 @@ function ArtworkCanvas() {
         ))}
       </svg>
       <button type="button" onClick={saveLayout} disabled={!state.dirty}>
-        Save layout
+        儲存佈局
       </button>
-
-      <pre>{JSON.stringify(state, null, 2)}</pre>
+      <button type="button" onClick={onStartCreating} disabled={state.dirty}>
+        新增藝品
+      </button>
     </div>
   );
 }
