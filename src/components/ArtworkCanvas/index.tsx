@@ -3,6 +3,7 @@ import { useGetExhibitionQuery } from "../../gql/queries/ExhibitionQueries";
 import { useCanvasReducerContext } from "../../store/CanvasReducerContext";
 import useDraggableCanvas from "../../hooks/useDraggableCanvas";
 import Toolbar from "./Toolbar";
+import styles from "./Canvas.module.sass";
 
 const ASPECT_RATIO = 16 / 9;
 const CANVAS_WIDTH = 800;
@@ -23,7 +24,7 @@ function ArtworkCanvas() {
   if (loading) return <div className="App" />;
 
   return (
-    <div className="App">
+    <div className={styles.root}>
       <svg
         ref={svgRef}
         xmlns="http://www.w3.org/2000/svg"
