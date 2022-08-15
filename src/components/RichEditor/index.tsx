@@ -53,6 +53,10 @@ const EditorComponent: React.FC<Props> = ({
     }
   });
 
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [error, setError] = useState(false);
+  const [dirty, setDirty] = useState(false);
+
   const setEditorState: typeof rawSetEditorState = useCallback(
     (state) => {
       rawSetEditorState(state);
@@ -60,10 +64,6 @@ const EditorComponent: React.FC<Props> = ({
     },
     [rawSetEditorState]
   );
-
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [error, setError] = useState(false);
-  const [dirty, setDirty] = useState(false);
 
   const handleSave = async () => {
     const raw = convertToRaw(editorState.getCurrentContent());
@@ -77,23 +77,20 @@ const EditorComponent: React.FC<Props> = ({
     }
   };
 
-  const handleKeyCommand = useCallback(
-    (command: string, editorState: EditorState) => {
-      if (command === "myeditor-save") {
-        handleSave();
-        return "handled";
-      }
+  const handleKeyCommand = (command: string, editorState: EditorState) => {
+    if (command === "myeditor-save") {
+      handleSave();
+      return "handled";
+    }
 
-      const newState = RichUtils.handleKeyCommand(editorState, command);
-      if (newState) {
-        setEditorState(newState);
-        return "handled";
-      }
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      setEditorState(newState);
+      return "handled";
+    }
 
-      return "not-handled";
-    },
-    [setEditorState]
-  );
+    return "not-handled";
+  };
 
   return (
     <div className={styles.editor}>

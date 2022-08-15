@@ -11,6 +11,7 @@ const EditArtworkBody: React.FC<Props> = () => {
   const { data } = useGetCurrentArtworkQuery();
   const [mutate, { loading: mutating }] = useUpdateArtworkMutation();
   const artwork = data?.artwork;
+
   const onSave = useCallback(async (state: RawDraftContentState) => {
     try {
       const bodyHtml = draftToHtml(state);
