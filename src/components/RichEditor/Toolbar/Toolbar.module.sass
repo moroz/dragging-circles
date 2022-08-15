@@ -1,0 +1,59 @@
+@import ../../../css/_variables.sass
+
+.toolbar
+  background: $editor-toolbar-color
+  display: flex
+  border-bottom: 1px solid #ddd
+  gap: .5rem
+  align-items: center
+
+.button
+  background: transparent
+
+  &:hover
+    background: $editor-button-hover-bg
+
+  &.active
+    background: $editor-button-active-bg
+
+.button, .saveButton
+  display: inline-flex
+  margin: 0
+  height: $editor-button-height
+  line-height: $editor-button-height
+  min-width: $editor-button-height
+  border: 0
+  outline: 0
+  align-items: center
+  justify-content: center
+  gap: .5rem
+
+  svg
+    height: $editor-icon-height
+    width: $editor-icon-height
+    fill: currentColor
+    
+  &.icon
+    width: $editor-button-height
+
+  &:not(.icon)
+    padding: 0 .75em
+
+.saveButton
+  background: $primary
+  color: white
+  cursor: pointer
+
+  &:hover
+    background: lighten($primary, 5%)
+
+  &:disabled, &:disabled:hover
+    background: transparent
+    color: $grey-dark
+    cursor: default
+
+.status
+  color: $grey-dark
+  padding: 0 .5rem
+  font-size: .9em
+

@@ -1,0 +1,47 @@
+@import ../../css/_variables.sass
+
+.editor
+  flex-direction: column
+  background: white
+  flex: 1
+  border: 1px solid #ddd
+  margin-bottom: .75rem
+
+.toolbar
+  background: $editor-toolbar-color
+  display: flex
+  border-bottom: 1px solid #ddd
+  gap: .5rem
+  align-items: center
+
+.controls
+  display: flex
+  gap: .25rem
+  position: relative
+
+  &:not(:last-child)
+    &::after
+      content: ''
+      display: block
+      width: 1px
+      background: #ccc
+      position: absolute
+      right: -.25rem
+      top: 3px
+      bottom: 3px
+
+.editorContainer
+  padding: 1.5rem
+  font-size: 1.1em
+  height: 100%
+
+  :global
+    .DraftEditor-root
+      height: 100%
+
+.status
+  color: $grey-dark
+  padding: 0 .5rem
+
+.saveButton
+  margin: 0 .5rem 0 auto
