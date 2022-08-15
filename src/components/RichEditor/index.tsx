@@ -70,7 +70,6 @@ const EditorComponent: React.FC<Props> = ({
   const handleSave = async () => {
     const raw = convertToRaw(editorState.getCurrentContent());
     const result = await onSave(raw);
-    console.log({ result });
     if (result) {
       setLastSaved(new Date());
       setError(false);

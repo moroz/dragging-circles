@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
 import { Artwork } from "../../interfaces/artwork";
 import { ID } from "../../interfaces/common";
 
@@ -37,3 +38,8 @@ export const useGetArtworkQuery = (id: ID) =>
       id
     }
   });
+
+export const useGetCurrentArtworkQuery = () => {
+  const { id } = useParams();
+  return useGetArtworkQuery(id!);
+};

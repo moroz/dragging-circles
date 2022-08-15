@@ -20,8 +20,16 @@ export interface ArtworkShapeInput {
 export interface ArtworkInput {
   author?: string;
   body?: string;
+  bodyHtml?: string;
   title?: string;
   x: number;
   y: number;
   exhibitionId: ID;
+}
+
+export interface UpdateArtworkInput {
+  author?: string;
+  body?: string;
+  bodyHtml?: string;
+  title?: string;
 }

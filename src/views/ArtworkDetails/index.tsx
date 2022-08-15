@@ -1,7 +1,6 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import EditorComponent from "../../components/RichEditor";
-import { useGetArtworkQuery } from "../../gql/queries/ArtworkQueries";
+import { useGetCurrentArtworkQuery } from "../../gql/queries/ArtworkQueries";
 import Layout from "../../layout";
 import { LayoutLoader } from "../../layout/Loader";
 import NotFound from "../NotFound";
@@ -9,8 +8,7 @@ import NotFound from "../NotFound";
 interface Props {}
 
 const ArtworkDetails: React.FC<Props> = () => {
-  const { id } = useParams();
-  const { data, loading } = useGetArtworkQuery(id!);
+  const { data, loading } = useGetCurrentArtworkQuery();
 
   if (loading && !data) return <LayoutLoader />;
   const artwork = data?.artwork;

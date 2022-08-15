@@ -11,7 +11,9 @@ const AppRoutes: React.FC<Props> = () => {
     <Routes>
       <Route index element={<ArtworkCanvas />} />
       <Route path="/sign-in" element={<SignIn />} />
-      <Route path="/artworks/:id" element={<ArtworkDetails />} />
+      <Route path="/artworks/:id" element={<ArtworkDetails />}>
+        <Route index element={<EditArtworkBody />} />
+      </Route>
     </Routes>
   );
 };
