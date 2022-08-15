@@ -5,6 +5,7 @@ import useDraggableCanvas from "../../hooks/useDraggableCanvas";
 import Toolbar from "./Toolbar";
 import styles from "./Canvas.module.sass";
 import Layout from "../../layout";
+import Shape from "./Shape";
 
 const ASPECT_RATIO = 16 / 9;
 const CANVAS_WIDTH = 800;
@@ -38,18 +39,14 @@ function ArtworkCanvas() {
           onClick={onClick}
           onMouseLeave={onMouseLeave}
         >
-          {state.exhibition?.artworks.map((shape) => (
-            <circle
-              key={shape.id}
-              cx={shape.x}
-              cy={shape.y}
-              r={25}
-              className={styles.circle}
-              onMouseDown={onDragStart(shape)}
+          {state.exhibition?.artworks.map((artwork) => (
+            <Shape
+              mode={state.mode}
+              key={artwork.id}
+              artwork={artwork}
+              onMouseDown={onDragStart(artwork)}
               onMouseUp={onDragEnd}
-            >
-              <title>{shape.title}</title>
-            </circle>
+            />
           ))}
         </svg>
         <Toolbar onReset={onReset} />
