@@ -1,5 +1,5 @@
 import React from "react";
-import EditorComponent from "../../components/RichEditor";
+import { Outlet } from "react-router-dom";
 import { useGetCurrentArtworkQuery } from "../../gql/queries/ArtworkQueries";
 import Layout from "../../layout";
 import { LayoutLoader } from "../../layout/Loader";
@@ -18,12 +18,7 @@ const ArtworkDetails: React.FC<Props> = () => {
 
   return (
     <Layout title={title} backUrl="/">
-      <form></form>
-      <EditorComponent
-        initialState={artwork?.body}
-        onSave={async () => true}
-        mutating={false}
-      />
+      <Outlet />
     </Layout>
   );
 };

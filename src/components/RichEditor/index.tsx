@@ -4,9 +4,10 @@ import {
   ContentBlock,
   convertFromRaw,
   convertToRaw,
-  DraftEditorCommand,
   Editor,
   EditorState,
+  getDefaultKeyBinding,
+  KeyBindingUtil,
   RawDraftContentState,
   RichUtils
 } from "draft-js";
@@ -29,6 +30,14 @@ function getBlockStyle(block: ContentBlock) {
   }
 }
 
+function keyBindingFn(e: React.KeyboardEvent): string | null {
+  if (e.key === "s" && KeyBindingUtil.hasCommandModifier(e)) {
+    return "myeditor-save";
+  }
+
+  return getDefaultKeyBinding(e);
+}
+
 const EditorComponent: React.FC<Props> = ({
   initialState,
   onSave,
@@ -36,7 +45,9 @@ const EditorComponent: React.FC<Props> = ({
 }) => {
   const [editorState, rawSetEditorState] = useState(() => {
     if (initialState) {
-      return EditorState.createWithContent(convertFromRaw(initialState));
+      return EditorState.createWithContent(
+        convertFromRaw(JSON.parse(initialState))
+      );
     } else {
       return EditorState.createEmpty();
     }
@@ -54,19 +65,6 @@ const EditorComponent: React.FC<Props> = ({
   const [error, setError] = useState(false);
   const [dirty, setDirty] = useState(false);
 
-  const handleKeyCommand = useCallback(
-    (command: DraftEditorCommand, editorState: EditorState) => {
-      const newState = RichUtils.handleKeyCommand(editorState, command);
-      if (newState) {
-        setEditorState(newState);
-        return "handled";
-      }
-
-      return "not-handled";
-    },
-    [setEditorState]
-  );
-
   const handleSave = async () => {
     const raw = convertToRaw(editorState.getCurrentContent());
     const result = await onSave(raw);
@@ -78,6 +76,24 @@ const EditorComponent: React.FC<Props> = ({
       setError(true);
     }
   };
+
+  const handleKeyCommand = useCallback(
+    (command: string, editorState: EditorState) => {
+      if (command === "myeditor-save") {
+        handleSave();
+        return "handled";
+      }
+
+      const newState = RichUtils.handleKeyCommand(editorState, command);
+      if (newState) {
+        setEditorState(newState);
+        return "handled";
+      }
+
+      return "not-handled";
+    },
+    [setEditorState]
+  );
 
   return (
     <div className={styles.editor}>
@@ -95,6 +111,7 @@ const EditorComponent: React.FC<Props> = ({
           editorState={editorState}
           onChange={setEditorState}
           blockStyleFn={getBlockStyle as any}
+          keyBindingFn={keyBindingFn}
           handleKeyCommand={handleKeyCommand}
         />
       </div>
