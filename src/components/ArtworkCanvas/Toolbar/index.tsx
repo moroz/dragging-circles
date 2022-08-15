@@ -8,20 +8,27 @@ interface Props {
   onReset: () => void;
 }
 
+const MODE_TO_MESSAGE: Record<CanvasReducerMode, string> = {
+  [CanvasReducerMode.Standby]: `您可以點擊畫布上的任何一個圈圈進行編輯或刪除。`,
+  [CanvasReducerMode.Moving]: `現在您可以用滑鼠拖曳圈圈（作品）。拖曳完畢請點擊「儲存佈局」。`,
+  [CanvasReducerMode.Creating]: `請點擊畫面上的一處來建立作品。`,
+  [CanvasReducerMode.Loading]: ""
+};
+
 const Toolbar: React.FC<Props> = ({ onReset }) => {
   const { state, startDragging, toggleCreating } = useCanvasReducerContext();
 
   const { saveLayout } = useDraggableCanvas();
 
-  const canDrag = state.mode === CanvasReducerMode.Standby;
-
   return (
     <div className={styles.toolbar}>
-      {canDrag ? (
+      {[CanvasReducerMode.Standby, CanvasReducerMode.Creating].includes(
+        state.mode
+      ) ? (
         <button
           type="button"
           onClick={startDragging}
-          disabled={!canDrag}
+          disabled={state.mode === CanvasReducerMode.Creating}
           className="button"
         >
           開啓拖拉
@@ -42,14 +49,17 @@ const Toolbar: React.FC<Props> = ({ onReset }) => {
           儲存佈局
         </button>
       ) : null}
-      <button
-        type="button"
-        onClick={toggleCreating}
-        disabled={state.dirty}
-        className="button is-success"
-      >
-        {state.mode === CanvasReducerMode.Creating ? "取消新增" : "新增藝品"}
-      </button>
+      {state.mode !== CanvasReducerMode.Moving ? (
+        <button
+          type="button"
+          onClick={toggleCreating}
+          disabled={state.dirty}
+          className="button is-success"
+        >
+          {state.mode === CanvasReducerMode.Creating ? "取消新增" : "新增藝品"}
+        </button>
+      ) : null}
+      <div>{MODE_TO_MESSAGE[state.mode]}</div>
     </div>
   );
 };

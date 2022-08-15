@@ -6,6 +6,7 @@ import Toolbar from "./Toolbar";
 import styles from "./Canvas.module.sass";
 import Layout from "../../layout";
 import Shape from "./Shape";
+import { LayoutLoader } from "../../layout/Loader";
 
 const ASPECT_RATIO = 16 / 9;
 const CANVAS_WIDTH = 800;
@@ -23,10 +24,10 @@ function ArtworkCanvas() {
 
   useEffect(onReset, [loading, data]);
 
-  if (loading) return <div className="App" />;
+  if (loading) return <LayoutLoader />;
 
   return (
-    <Layout>
+    <Layout title="畫布">
       <div className={styles.root}>
         <svg
           ref={svgRef}
