@@ -4,6 +4,7 @@ import { useGetCurrentArtworkQuery } from "../../gql/queries/ArtworkQueries";
 import Layout from "../../layout";
 import { LayoutLoader } from "../../layout/Loader";
 import NotFound from "../NotFound";
+import TabNavigation from "./TabNavigation";
 
 interface Props {}
 
@@ -18,6 +19,7 @@ const ArtworkDetails: React.FC<Props> = () => {
 
   return (
     <Layout title={title} backUrl="/">
+      <TabNavigation artwork={artwork} />
       <Outlet />
     </Layout>
   );

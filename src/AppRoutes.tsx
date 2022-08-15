@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import ArtworkCanvas from "./components/ArtworkCanvas";
 import ArtworkDetails from "./views/ArtworkDetails";
 import EditArtworkBody from "./views/ArtworkDetails/EditArtworkBody";
+import EditArtworkMeta from "./views/ArtworkDetails/EditArtworkMeta";
 import SignIn from "./views/SignIn";
 
 interface Props {}
@@ -13,7 +14,8 @@ const AppRoutes: React.FC<Props> = () => {
       <Route index element={<ArtworkCanvas />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/artworks/:id" element={<ArtworkDetails />}>
-        <Route index element={<EditArtworkBody />} />
+        <Route index element={<EditArtworkMeta />} />
+        <Route path="body" element={<EditArtworkBody />} />
       </Route>
     </Routes>
   );
