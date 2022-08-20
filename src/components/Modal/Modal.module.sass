@@ -1,0 +1,42 @@
+@import ../../css/_variables.sass
+
+.overlay
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background: rgba(97, 117, 138, .75)
+  transition: .15s ease-in-out
+
+  &:not(.show)
+    background: transparent
+    pointer-events: none
+
+.header
+  font-size: 1.1em
+
+.modal
+  position: fixed
+  top: 50%
+  left: 50%
+  background: white
+  transform: translate(-50%, -50%)
+
+.close
+  background: transparent
+  font: inherit
+  border: 0
+  outline: none
+  display: inline-flex
+  gap: .5rem
+  align-items: center
+  color: #888
+  cursor: pointer
+  padding: 0 .75rem
+
+  svg
+    height: 1.25rem
+    fill: currentcolor
+    line-height: 0
+    margin-bottom: -.1em

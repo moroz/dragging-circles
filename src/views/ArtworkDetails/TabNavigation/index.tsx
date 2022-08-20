@@ -10,7 +10,8 @@ interface Props {
 
 const config = {
   基本資料: "",
-  內文編輯: "/body"
+  內文編輯: "/body",
+  相簿: "/assets"
 };
 
 const TabNavigation: React.FC<Props> = ({ artwork }) => {

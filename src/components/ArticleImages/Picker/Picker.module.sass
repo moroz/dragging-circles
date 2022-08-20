@@ -1,0 +1,26 @@
+@import ../../../css/_variables.sass
+
+.root
+  height: $article-image-grid-size
+  padding: 1rem
+  position: relative
+  color: #333
+  border: 2px dashed 
+  background: white
+  display: flex
+  align-items: center
+  justify-content: center
+  text-align: center
+  flex-direction: column
+  cursor: pointer
+  gap: 1rem
+
+  input[type="file"]
+    appearance: none
+    position: absolute
+    width: 0
+    height: 0
+
+  svg
+    width: 20%
+    fill: currentColor
