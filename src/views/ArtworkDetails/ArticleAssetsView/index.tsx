@@ -16,7 +16,7 @@ const ArticleAssetsView: React.FC<Props> = () => {
   return (
     <>
       <ArticleImages
-        article={article}
+        article={artwork}
         refetch={refetch}
         onOpenModal={() => setShowModal(true)}
       />
