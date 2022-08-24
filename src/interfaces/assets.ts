@@ -27,13 +27,13 @@ export interface Video {
 
 export type Asset = Image | Video;
 
-export interface ArticleAsset {
+export interface ArtworkAsset {
   id: ID;
   priority: number;
   asset: Asset;
 }
 
-export interface ArticleAssetParams {
+export interface ArtworkAssetParams {
   priority: number;
   assetId: ID;
 }

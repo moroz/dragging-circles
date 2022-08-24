@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from "react";
-import styles from "./ArticleImages.module.sass";
+import styles from "./ArtworkImages.module.sass";
 import { Artwork } from "../../interfaces/artwork";
 import Picker from "./Picker";
 import Thumbnail from "./Thumbnail";
 import SortImages, { ImageItem } from "./SortImages";
 import clsx from "clsx";
-import { useRearrangeArticleAssetsMutation } from "../../gql/mutations/assetMutations";
+import { useRearrangeArtworkAssetsMutation } from "../../gql/mutations/AssetMutations";
 
 interface Props {
   artwork: Artwork;
@@ -13,10 +13,10 @@ interface Props {
   onOpenModal: VoidFunction;
 }
 
-const ArticleImages: React.FC<Props> = ({ artwork, refetch, onOpenModal }) => {
+const ArtworkImages: React.FC<Props> = ({ artwork, refetch, onOpenModal }) => {
   const [arranging, setArranging] = useState(false);
   const [items, setItems] = useState<ImageItem[]>([]);
-  const [mutate] = useRearrangeArticleAssetsMutation();
+  const [mutate] = useRearrangeArtworkAssetsMutation();
 
   const toggleArranging = useCallback(() => {
     setArranging((t) => !t);
@@ -44,7 +44,7 @@ const ArticleImages: React.FC<Props> = ({ artwork, refetch, onOpenModal }) => {
 
   return (
     <section>
-      {article.articleAssets.length > 1 ? (
+      {artwork.artworkAssets.length > 1 ? (
         <header className={styles.sectionHeader}>
           <div className="buttons">
             <button
@@ -80,9 +80,9 @@ const ArticleImages: React.FC<Props> = ({ artwork, refetch, onOpenModal }) => {
         <div className={styles.grid}>
           {artwork.artworkAssets.map((ai) => (
             <Thumbnail
-              articleAsset={ai}
+              artworkAsset={ai}
               key={ai.id}
-              article={artwork}
+              artwork={artwork}
               refetch={refetch}
             />
           ))}
@@ -93,4 +93,4 @@ const ArticleImages: React.FC<Props> = ({ artwork, refetch, onOpenModal }) => {
   );
 };
 
-export default ArticleImages;
+export default ArtworkImages;

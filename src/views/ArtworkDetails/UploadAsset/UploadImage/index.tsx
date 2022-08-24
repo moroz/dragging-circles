@@ -1,10 +1,9 @@
 import clsx from "clsx";
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import AspectRatioBox from "../../../../components/AspectRatioBox";
 import Textarea from "../../../../components/Textarea";
-import { ORIENTATION_RATIO_MAPPING } from "../../../../helpers/orientation";
 import readAsDataUrl from "../../../../helpers/readAsDataUrl";
 import { Artwork } from "../../../../interfaces/artwork";
 import DropzonePlaceholder from "../DropzonePlaceholder";
@@ -25,9 +24,7 @@ const UploadImage: React.FC<Props> = ({ setImage }) => {
   const [preview, setPreview] = useState<null | string>(null);
   const [error, setError] = useState(false);
   const [rejectedFiles, setRejectedFiles] = useState<FileRejection[]>([]);
-  const { register, watch } = useFormContext();
-  const orientation = watch("orientation") as ImageOrientation;
-  const ratio = ORIENTATION_RATIO_MAPPING[orientation];
+  const { register } = useFormContext();
 
   const onDrop = useCallback(
     async (files: File[], rejected: FileRejection[]) => {

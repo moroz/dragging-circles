@@ -1,15 +1,15 @@
 import clsx from "clsx";
 import React, { useCallback, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { useDeleteArticleAssetMutation } from "../../../gql/mutations/assetMutations";
-import { Article } from "../../../interfaces/articles";
+import { useDeleteArtworkAssetMutation } from "../../../gql/mutations/AssetMutations";
+import { Artwork } from "../../../interfaces/artwork";
 import { Asset } from "../../../interfaces/assets";
 import { ID } from "../../../interfaces/common";
 import AssetImage from "../../AssetImage";
-import styles from "../ArticleImages.module.sass";
+import styles from "../ArtworkImages.module.sass";
 
 interface Props {
-  article: Article;
+  artwork: Artwork;
   refetch: VoidFunction;
   items: ImageItem[];
   setItems: React.Dispatch<React.SetStateAction<ImageItem[]>>;
@@ -22,17 +22,17 @@ export interface ImageItem {
 
 const DELETE_PROMPT = `您確定希望刪除這張圖片嗎？`;
 
-const SortImages: React.FC<Props> = ({ refetch, article, items, setItems }) => {
+const SortImages: React.FC<Props> = ({ refetch, artwork, items, setItems }) => {
   const [dirty, setDirty] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [deleteImage] = useDeleteArticleAssetMutation();
+  const [deleteImage] = useDeleteArtworkAssetMutation();
 
   const onDelete = useCallback(
     (id: ID) => {
       return async () => {
         if (!confirm(DELETE_PROMPT)) return;
         await deleteImage({
-          variables: { articleId: article.id, articleAssetId: id }
+          variables: { artworkId: artwork.id, artworkAssetId: id }
         });
         setItems((items) => items.filter((that) => that.id !== id));
         refetch();
