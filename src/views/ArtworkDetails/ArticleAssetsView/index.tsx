@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from "react";
-import ArticleImages from "../../../components/ArticleImages";
+import ArtworkImages from "../../../components/ArticleImages";
 import { useGetCurrentArtworkQuery } from "../../../gql/queries/ArtworkQueries";
 import UploadAsset from "../UploadAsset";
 
-interface Props {}
+interface Props {
+  refetch: () => void;
+}
 
-const ArticleAssetsView: React.FC<Props> = () => {
+const ArtworkAssetsView: React.FC<Props> = ({ refetch }) => {
   const [showModal, setShowModal] = useState(false);
   const { data } = useGetCurrentArtworkQuery();
   const onCloseModal = useCallback(() => setShowModal(false), [setShowModal]);
@@ -15,19 +17,19 @@ const ArticleAssetsView: React.FC<Props> = () => {
 
   return (
     <>
-      <ArticleImages
-        article={artwork}
+      <ArtworkImages
+        artwork={artwork}
         refetch={refetch}
         onOpenModal={() => setShowModal(true)}
       />
       <UploadAsset
         show={showModal}
         onClose={onCloseModal}
-        article={article}
+        artwork={artwork}
         refetch={refetch}
       />
     </>
   );
 };
 
-export default ArticleAssetsView;
+export default ArtworkAssetsView;

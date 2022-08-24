@@ -10,8 +10,8 @@ import UploadImage from "./UploadImage";
 import styles from "./UploadAsset.module.sass";
 import AddVideo from "./AddVideo";
 import {
-  uploadArticleImage,
-  useAddArticleVideoMutation
+  uploadArtworkImage,
+  useAddArtworkVideoMutation
 } from "../../../gql/mutations/assetMutations";
 
 interface Props {
@@ -35,7 +35,7 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
     }
   });
   const { reset, register, watch } = methods;
-  const [mutate] = useAddArticleVideoMutation();
+  const [mutate] = useAddArtworkVideoMutation();
 
   const type = watch("type");
 
@@ -47,7 +47,7 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
   }, [refetch, onClose, reset]);
 
   const onUploadImage = useCallback(async () => {
-    const { data } = await uploadArticleImage(
+    const { data } = await uploadArtworkImage(
       {
         image: image!,
         artworkId: artwork.id
@@ -62,7 +62,7 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
 
   const onAddVideo = useCallback(async ({ videoId }: FormParams) => {
     const res = await mutate({ variables: { artworkId: artwork.id, videoId } });
-    if (res.data?.addArticleVideo.success) onSuccess();
+    if (res.data?.addArtworkVideo.success) onSuccess();
   }, []);
 
   const onSubmit = useCallback(

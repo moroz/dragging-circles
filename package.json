@@ -27,6 +27,7 @@
     "react-router-dom": "^6.3.0",
     "react-sortablejs": "^6.1.4",
     "sass": "^1.54.0",
+    "sortablejs": "^1.15.0",
     "vite-plugin-svgr": "^2.2.1"
   },
   "devDependencies": {
