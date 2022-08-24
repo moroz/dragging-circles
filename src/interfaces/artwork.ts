@@ -1,3 +1,4 @@
+import { ArtworkAsset } from "./assets";
 import { ID } from "./common";
 
 export interface Artwork {
@@ -9,6 +10,7 @@ export interface Artwork {
   title: string;
   insertedAt: string;
   updatedAt: string;
+  artworkAssets: ArtworkAsset[];
 }
 
 export interface ArtworkShapeInput {

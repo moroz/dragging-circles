@@ -62,7 +62,7 @@ const UploadImage: React.FC<Props> = ({ setImage }) => {
       <div className={clsx(styles.previewBox)} {...getRootProps()}>
         <input {...getInputProps()} />
         <AspectRatioBox
-          ratio={ratio}
+          ratio={1}
           className={clsx(styles.previewImage, !preview && styles.empty)}
         >
           {preview ? <img src={preview} /> : <DropzonePlaceholder />}

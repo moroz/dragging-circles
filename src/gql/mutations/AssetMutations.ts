@@ -1,18 +1,21 @@
 import { gql, useMutation } from "@apollo/client";
 import { Artwork } from "../../interfaces/artwork";
 import { ID, MutationResult } from "../../interfaces/common";
-import { ArtworkAsset, ArtworkAssetParams } from "../../interfaces/assets";
+import {
+  ArtworkAsset,
+  ArtworkAssetParams,
+  AssetType
+} from "../../interfaces/assets";
 import { GRAPHQL_API_URI } from "../client";
 
 export const UPLOAD_ARTWORK_IMAGE = gql`
-  mutation UploadImage($image: Upload!, $artworkId: ID!, $altText: String) {
-    result: uploadImage(
-      image: $image
-      artworkId: $artworkId
-      altText: $altText
-    ) {
+  mutation CreateAsset($file: Upload!, $artworkId: ID!, $type: AssetType!) {
+    result: createAsset(file: $file, artworkId: $artworkId, type: $type) {
       success
-      errors
+      errors {
+        key
+        message
+      }
       data {
         id
         asset {
@@ -28,7 +31,8 @@ export const UPLOAD_ARTWORK_IMAGE = gql`
 
 export interface UploadArtworkImageVariables {
   artworkId: ID;
-  image: File;
+  file: File;
+  type: AssetType;
 }
 
 export interface UploadArtworkImageResult {
@@ -38,14 +42,14 @@ export interface UploadArtworkImageResult {
 }
 
 export const uploadArtworkImage = (
-  { image, artworkId }: UploadArtworkImageVariables,
+  { file, artworkId, type }: UploadArtworkImageVariables,
   onProgress: (progress: number) => void
 ): Promise<UploadArtworkImageResult> => {
   return new Promise((resolve, reject) => {
     const data = new FormData();
     data.append("query", UPLOAD_ARTWORK_IMAGE.loc!.source.body);
-    data.append("variables", JSON.stringify({ artworkId, image: "image" }));
-    data.append("image", image);
+    data.append("variables", JSON.stringify({ artworkId, file: "file", type }));
+    data.append("file", file);
 
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;

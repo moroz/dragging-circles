@@ -11,6 +11,15 @@ export const ARTWORK_DETAILS = gql`
     y
     body
     author
+    artworkAssets {
+      id
+      asset {
+        ... on Image {
+          id
+          downloadUrl
+        }
+      }
+    }
   }
 `;
 

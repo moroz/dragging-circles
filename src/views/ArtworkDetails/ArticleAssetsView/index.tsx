@@ -3,13 +3,11 @@ import ArtworkImages from "../../../components/ArticleImages";
 import { useGetCurrentArtworkQuery } from "../../../gql/queries/ArtworkQueries";
 import UploadAsset from "../UploadAsset";
 
-interface Props {
-  refetch: () => void;
-}
+interface Props {}
 
-const ArtworkAssetsView: React.FC<Props> = ({ refetch }) => {
+const ArtworkAssetsView: React.FC<Props> = () => {
   const [showModal, setShowModal] = useState(false);
-  const { data } = useGetCurrentArtworkQuery();
+  const { data, refetch } = useGetCurrentArtworkQuery();
   const onCloseModal = useCallback(() => setShowModal(false), [setShowModal]);
   const artwork = data?.artwork;
 

@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import styles from "./ArticleImageUploader.module.sass";
-import { Article } from "../../../interfaces/articles";
+import { Artwork } from "../../../interfaces/artwork";
 import readAsDataUrl from "../../../helpers/readAsDataUrl";
 
 interface Props {
-  article: Article;
+  article: Artwork;
   file: File | null;
   onSuccess: VoidFunction;
 }

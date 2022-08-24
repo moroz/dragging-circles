@@ -12,7 +12,7 @@ import AddVideo from "./AddVideo";
 import {
   uploadArtworkImage,
   useAddArtworkVideoMutation
-} from "../../../gql/mutations/assetMutations";
+} from "../../../gql/mutations/AssetMutations";
 
 interface Props {
   show: boolean;
@@ -49,8 +49,9 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
   const onUploadImage = useCallback(async () => {
     const { data } = await uploadArtworkImage(
       {
-        image: image!,
-        artworkId: artwork.id
+        file: image!,
+        artworkId: artwork.id,
+        type: AssetType.Image
       },
       setProgress
     );
