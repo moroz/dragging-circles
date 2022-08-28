@@ -8,7 +8,25 @@ import {
 } from "../../interfaces/assets";
 import { GRAPHQL_API_URI } from "../client";
 
+export const ARTWORK_ASSET_DETAILS = gql`
+  fragment ArtworkAssetDetails on ArtworkAsset {
+    asset {
+      ... on Image {
+        id
+        uuid
+        downloadUrl
+      }
+      ... on Video {
+        id
+        videoId
+      }
+    }
+  }
+`;
+
 export const UPLOAD_ARTWORK_IMAGE = gql`
+  ${ARTWORK_ASSET_DETAILS}
+
   mutation CreateAsset($file: Upload!, $artworkId: ID!, $type: AssetType!) {
     result: createAsset(file: $file, artworkId: $artworkId, type: $type) {
       success
@@ -18,12 +36,7 @@ export const UPLOAD_ARTWORK_IMAGE = gql`
       }
       data {
         id
-        asset {
-          ... on Image {
-            id
-            uuid
-          }
-        }
+        ...ArtworkAssetDetails
       }
     }
   }
@@ -41,10 +54,11 @@ export interface UploadArtworkImageResult {
   };
 }
 
-export const uploadArtworkImage = (
-  { file, artworkId, type }: UploadArtworkImageVariables,
-  onProgress: (progress: number) => void
-): Promise<UploadArtworkImageResult> => {
+export const uploadArtworkImage = ({
+  file,
+  artworkId,
+  type
+}: UploadArtworkImageVariables): Promise<UploadArtworkImageResult> => {
   return new Promise((resolve, reject) => {
     const data = new FormData();
     data.append("query", UPLOAD_ARTWORK_IMAGE.loc!.source.body);
@@ -54,11 +68,6 @@ export const uploadArtworkImage = (
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     xhr.open("POST", GRAPHQL_API_URI, true);
-    xhr.upload.addEventListener("progress", (ev) => {
-      if (ev.lengthComputable) {
-        onProgress((ev.loaded / ev.total) * 100);
-      }
-    });
     xhr.addEventListener("load", () => {
       resolve(JSON.parse(xhr.response));
     });
@@ -68,17 +77,21 @@ export const uploadArtworkImage = (
 };
 
 export const REARRANGE_ARTWORK_IMAGES = gql`
+  ${ARTWORK_ASSET_DETAILS}
+
   mutation RearrangeImages($artworkId: ID!, $params: [ArtworkAssetParams!]!) {
     result: rearrangeArtworkAssets(artworkId: $artworkId, params: $params) {
       success
+      errors {
+        key
+        message
+      }
       data {
         id
         artworkAssets {
           id
-          priority
-          asset {
-            id
-          }
+          position
+          ...ArtworkAssetDetails
         }
       }
     }
@@ -130,7 +143,10 @@ export const ADD_ARTWORK_VIDEO = gql`
   mutation AddArtworkVideo($artworkId: ID!, $videoId: String!) {
     addArtworkVideo(artworkId: $artworkId, videoId: $videoId) {
       success
-      errors
+      errors {
+        key
+        message
+      }
       data {
         id
         asset {

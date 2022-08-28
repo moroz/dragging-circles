@@ -11,7 +11,7 @@ const Picker: React.FC<Props> = ({ onOpenModal }) => {
   return (
     <div className={clsx(styles.root)} onClick={onOpenModal}>
       <UploadIcon />
-      <p>上傳圖片</p>
+      <p>上傳檔案</p>
     </div>
   );
 };

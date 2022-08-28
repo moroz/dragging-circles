@@ -24,15 +24,17 @@
   width: 500px
   height: 500px
   display: grid
-  // place-items: center
   position: relative
+
+  &:not(.empty)
+    place-content: center
 
 .previewImage, .video
   border-radius: 3px
 
-.empty
-  background: transparentize($primary, .9)
-  border: 2px dashed $primary
+  &.empty
+    background: transparentize($primary, .9)
+    border: 2px dashed $primary
 
 .previewImage.empty
   cursor: pointer

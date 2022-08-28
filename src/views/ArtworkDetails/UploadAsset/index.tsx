@@ -13,6 +13,7 @@ import {
   uploadArtworkImage,
   useAddArtworkVideoMutation
 } from "../../../gql/mutations/AssetMutations";
+import UploadAudio from "./UploadAudio";
 
 interface Props {
   show: boolean;
@@ -27,8 +28,7 @@ interface FormParams {
 }
 
 const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
-  const [image, setImage] = useState<File | null>(null);
-  const [progress, setProgress] = useState<number | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const methods = useForm<FormParams>({
     defaultValues: {
       type: AssetType.Image
@@ -43,23 +43,20 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
     refetch();
     onClose();
     reset();
-    setImage(null);
+    setFile(null);
   }, [refetch, onClose, reset]);
 
   const onUploadImage = useCallback(async () => {
-    const { data } = await uploadArtworkImage(
-      {
-        file: image!,
-        artworkId: artwork.id,
-        type: AssetType.Image
-      },
-      setProgress
-    );
+    const { data } = await uploadArtworkImage({
+      file: file!,
+      artworkId: artwork.id,
+      type: AssetType.Image
+    });
     if (data?.result.success) {
       onSuccess();
       return;
     }
-  }, [image, artwork.id, setProgress]);
+  }, [file, artwork.id]);
 
   const onAddVideo = useCallback(async ({ videoId }: FormParams) => {
     const res = await mutate({ variables: { artworkId: artwork.id, videoId } });
@@ -70,6 +67,7 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
     async (params: FormParams) => {
       switch (params.type) {
         case AssetType.Image:
+        case AssetType.Audio:
           return onUploadImage();
         case AssetType.Video:
           return onAddVideo(params);
@@ -98,12 +96,19 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
               {...register("type")}
               value={AssetType.Video}
             />
+            <RadioButton
+              label="音訊"
+              {...register("type")}
+              value={AssetType.Audio}
+            />
           </RadioGroup>
           {type === AssetType.Image ? (
-            <UploadImage artwork={artwork} setImage={setImage} />
-          ) : (
-            <AddVideo artwork={artwork} />
-          )}
+            <UploadImage artwork={artwork} setImage={setFile} />
+          ) : null}
+          {type === AssetType.Video ? <AddVideo artwork={artwork} /> : null}
+          {type === AssetType.Audio ? (
+            <UploadAudio artwork={artwork} setFile={setFile} file={file} />
+          ) : null}
         </div>
       </FormWrapper>
     </Modal>

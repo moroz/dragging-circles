@@ -1,11 +1,12 @@
 import clsx from "clsx";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import AspectRatioBox from "../../../../components/AspectRatioBox";
 import Textarea from "../../../../components/Textarea";
 import readAsDataUrl from "../../../../helpers/readAsDataUrl";
 import { Artwork } from "../../../../interfaces/artwork";
+import { AssetType } from "../../../../interfaces/assets";
 import DropzonePlaceholder from "../DropzonePlaceholder";
 import styles from "../UploadAsset.module.sass";
 
@@ -59,13 +60,20 @@ const UploadImage: React.FC<Props> = ({ setImage }) => {
 
   return (
     <>
-      <div className={clsx(styles.previewBox)} {...getRootProps()}>
+      <div
+        className={clsx(styles.previewBox, styles.empty)}
+        {...getRootProps()}
+      >
         <input {...getInputProps()} />
         <AspectRatioBox
           ratio={1}
           className={clsx(styles.previewImage, !preview && styles.empty)}
         >
-          {preview ? <img src={preview} /> : <DropzonePlaceholder />}
+          {preview ? (
+            <img src={preview} />
+          ) : (
+            <DropzonePlaceholder type={AssetType.Image} />
+          )}
         </AspectRatioBox>
         {rejectedFiles.length ? (
           <div

@@ -18,6 +18,10 @@ export const ARTWORK_DETAILS = gql`
           id
           downloadUrl
         }
+        ... on Video {
+          id
+          videoId
+        }
       }
     }
   }
