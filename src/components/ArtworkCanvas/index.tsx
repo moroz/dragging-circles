@@ -13,7 +13,7 @@ const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = Math.ceil(CANVAS_WIDTH / ASPECT_RATIO);
 
 function ArtworkCanvas() {
-  const { data, loading } = useGetExhibitionQuery(1);
+  const { data, loading } = useGetExhibitionQuery();
   const { state, reset } = useCanvasReducerContext();
   const { onDragStart, onDragEnd, onMouseMove, onMouseLeave, svgRef, onClick } =
     useDraggableCanvas();

@@ -5,6 +5,7 @@ import ArtworkDetails from "./views/ArtworkDetails";
 import ArticleAssetsView from "./views/ArtworkDetails/ArticleAssetsView";
 import EditArtworkBody from "./views/ArtworkDetails/EditArtworkBody";
 import EditArtworkMeta from "./views/ArtworkDetails/EditArtworkMeta";
+import ExhibitionSetup from "./views/ExhibitionSetup";
 import SignIn from "./views/SignIn";
 
 interface Props {}
@@ -14,6 +15,7 @@ const AppRoutes: React.FC<Props> = () => {
     <Routes>
       <Route index element={<ArtworkCanvas />} />
       <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/exhibition" element={<ExhibitionSetup />} />
       <Route path="/artworks/:id" element={<ArtworkDetails />}>
         <Route index element={<EditArtworkMeta />} />
         <Route path="body" element={<EditArtworkBody />} />

@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { ID } from "../../interfaces/common";
 import { Exhibition } from "../../interfaces/exhibitions";
 
 export const GET_EXHIBITION_QUERY = gql`
@@ -23,12 +22,5 @@ export interface GetExhibitionQueryResult {
   getExhibition: Exhibition | null;
 }
 
-export interface GetExhibitionQueryVariables {
-  id: ID;
-}
-
-export const useGetExhibitionQuery = (id: ID) =>
-  useQuery<GetExhibitionQueryResult, GetExhibitionQueryVariables>(
-    GET_EXHIBITION_QUERY,
-    { variables: { id } }
-  );
+export const useGetExhibitionQuery = () =>
+  useQuery<GetExhibitionQueryResult>(GET_EXHIBITION_QUERY);
