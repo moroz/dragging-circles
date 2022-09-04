@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { ID, MutationResult } from "../../interfaces/common";
-import { User } from "../../interfaces/users";
+import { Role, User } from "../../interfaces/users";
 
 export const CREATE_USER_MUTATION = gql`
   mutation CreateUser($params: CreateUserParams!) {
@@ -23,6 +23,7 @@ export interface CreateUserParams {
   email: string;
   password: string;
   passwordConfirmation: string;
+  role: Role;
 }
 
 export interface CreateUserMutationResult {

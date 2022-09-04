@@ -38,7 +38,7 @@ const CreateExhibition: React.FC<Props> = () => {
   return (
     <Layout admin title="新增展覽">
       <FormWrapper {...methods} onSubmit={onSubmit}>
-        <InputField label="展覽名稱" {...register("title")} />
+        <InputField label="展覽名稱" {...register("title")} autoFocus />
         <SubmitButton />
       </FormWrapper>
     </Layout>

@@ -5,7 +5,7 @@ import { APP_NAME, APP_LONG_NAME } from "../../config";
 import SidebarLink from "./SidebarLink";
 
 const Sidebar = () => {
-  const { signOut } = useAuth();
+  const { signOut, user, isAdmin } = useAuth();
 
   return (
     <aside className={styles.sidebar}>
@@ -23,6 +23,12 @@ const Sidebar = () => {
           用戶管理
         </SidebarLink>
       </nav>
+      <section className={styles.userData}>
+        <p>現在使用者：</p>
+        <p className={styles.userName}>
+          {user?.email} {isAdmin && "(管理員)"}
+        </p>
+      </section>
       <button onClick={signOut} className={styles.logout}>
         登出
       </button>
