@@ -19,6 +19,9 @@ const Sidebar = () => {
         <SidebarLink to="/exhibitions" admin>
           展覽列表
         </SidebarLink>
+        <SidebarLink to="/users" admin>
+          用戶管理
+        </SidebarLink>
       </nav>
       <button onClick={signOut} className={styles.logout}>
         登出
