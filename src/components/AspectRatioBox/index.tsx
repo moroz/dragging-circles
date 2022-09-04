@@ -3,7 +3,7 @@ import styles from "./AspectRatioBox.module.sass";
 import clsx from "clsx";
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
-  ratio: number;
+  ratio: string;
 }
 
 const AspectRatioBox: React.FC<Props> = ({
@@ -12,9 +12,7 @@ const AspectRatioBox: React.FC<Props> = ({
   className,
   ...props
 }) => {
-  const style = {
-    "--aspect-ratio": ratio
-  } as React.CSSProperties;
+  const style = { aspectRatio: ratio };
 
   return (
     <div className={clsx(styles.box, className)} style={style} {...props}>

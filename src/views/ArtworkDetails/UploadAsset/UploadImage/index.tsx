@@ -63,7 +63,7 @@ const UploadImage: React.FC<Props> = ({ setImage }) => {
       >
         <input {...getInputProps()} />
         <AspectRatioBox
-          ratio={1}
+          ratio="1"
           className={clsx(styles.previewImage, !preview && styles.empty)}
         >
           {preview ? (

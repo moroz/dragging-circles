@@ -10,13 +10,8 @@ interface Props {
   onSuccess: VoidFunction;
 }
 
-const ArticleImageUploader: React.FC<Props> = ({
-  file,
-  article,
-  onSuccess
-}) => {
+const ArticleImageUploader: React.FC<Props> = ({ file }) => {
   const [preview, setPreview] = useState<null | string>(null);
-  const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState(false);
 
   const onSelectFile = useCallback(async (file: File) => {

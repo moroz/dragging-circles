@@ -41,7 +41,7 @@ const AddVideo: React.FC<Props> = () => {
     <>
       <div className={clsx(styles.previewBox, !youtubeId && styles.empty)}>
         <AspectRatioBox
-          ratio={16 / 9}
+          ratio="16 / 9"
           className={clsx(
             styles.landscape,
             styles.video,
