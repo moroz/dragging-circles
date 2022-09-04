@@ -153,3 +153,69 @@ export const useUpdateExhibitionMutation = () => {
 
   return { mutate, mutating, error, called, success };
 };
+
+export const CREATE_EXHIBITION_MUTATION = gql`
+  mutation CreateExhibition($params: CreateExhibitionParams!) {
+    result: createExhibition(params: $params) {
+      success
+      errors {
+        key
+        message
+      }
+      data {
+        id
+        active
+        title
+      }
+    }
+  }
+`;
+
+export interface CreateExhibitionMutationResult {
+  result: MutationResult<Exhibition>;
+}
+
+export interface CreateExhibitionParams {
+  title: string;
+}
+
+export interface CreateExhibitionMutationVariables {
+  params: CreateExhibitionParams;
+}
+
+export const useCreateExhibitionMutation = () =>
+  useMutation<
+    CreateExhibitionMutationResult,
+    CreateExhibitionMutationVariables
+  >(CREATE_EXHIBITION_MUTATION);
+
+export const SET_ACTIVE_EXHIBITION_MUTATION = gql`
+  mutation SetActiveExhibition($id: ID!) {
+    result: setActiveExhibition(id: $id) {
+      success
+      errors {
+        key
+        message
+      }
+      data {
+        id
+        title
+        active
+      }
+    }
+  }
+`;
+
+export interface SetActiveExhibitionMutationResult {
+  result: MutationResult<Exhibition>;
+}
+
+export interface SetActiveExhibitionMutationVariables {
+  id: ID;
+}
+
+export const useSetActiveExhibitionMutation = () =>
+  useMutation<
+    SetActiveExhibitionMutationResult,
+    SetActiveExhibitionMutationVariables
+  >(SET_ACTIVE_EXHIBITION_MUTATION);

@@ -1,4 +1,5 @@
 import React from "react";
+import { EXHIBITION_URL } from "../../../gql/client";
 import useDraggableCanvas from "../../../hooks/useDraggableCanvas";
 import { useCanvasReducerContext } from "../../../store/CanvasReducerContext";
 import { CanvasReducerMode } from "../../../store/CanvasReducerState";
@@ -22,6 +23,9 @@ const Toolbar: React.FC<Props> = ({ onReset }) => {
 
   return (
     <div className={styles.toolbar}>
+      <a href={EXHIBITION_URL} target="_blank" className="button">
+        展覽預展
+      </a>
       {[CanvasReducerMode.Standby, CanvasReducerMode.Creating].includes(
         state.mode
       ) ? (

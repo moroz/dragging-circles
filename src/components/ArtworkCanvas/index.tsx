@@ -27,7 +27,7 @@ function ArtworkCanvas() {
   if (loading) return <LayoutLoader />;
 
   return (
-    <Layout title="畫布">
+    <Layout title={`畫布：${data?.getExhibition?.title}`}>
       <div className={styles.root}>
         <svg
           ref={svgRef}

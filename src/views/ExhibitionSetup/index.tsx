@@ -6,6 +6,7 @@ import { useUpdateExhibitionMutation } from "../../gql/mutations/ExhibitionMutat
 import InputField from "../../components/InputField";
 import Layout from "../../layout";
 import styles from "./ExhibitionSetup.module.sass";
+import SubmitButton from "../../components/SubmitButton";
 
 interface Props {}
 
@@ -60,13 +61,9 @@ const ExhibitionSetup: React.FC<Props> = () => {
         ) : (
           <p>無背景圖片</p>
         )}
-        <button
-          type="submit"
-          className="button is-success"
-          disabled={!isDirty || mutating}
-        >
+        <SubmitButton disabled={!isDirty || mutating}>
           {mutating ? "更新中..." : "儲存更改"}
-        </button>
+        </SubmitButton>
       </FormWrapper>
     </Layout>
   );

@@ -24,7 +24,9 @@ export interface GetExhibitionQueryResult {
 }
 
 export const useGetExhibitionQuery = () =>
-  useQuery<GetExhibitionQueryResult>(GET_EXHIBITION_QUERY);
+  useQuery<GetExhibitionQueryResult>(GET_EXHIBITION_QUERY, {
+    fetchPolicy: "network-only"
+  });
 
 export const LIST_EXHIBITIONS_QUERY = gql`
   query ListExhibitions {
@@ -41,4 +43,6 @@ export interface ListExhibitionQueryResult {
 }
 
 export const useListExhibitionsQuery = () =>
-  useQuery<ListExhibitionQueryResult>(LIST_EXHIBITIONS_QUERY);
+  useQuery<ListExhibitionQueryResult>(LIST_EXHIBITIONS_QUERY, {
+    fetchPolicy: "cache-and-network"
+  });
