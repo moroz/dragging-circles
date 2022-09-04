@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import FormWrapper from "../../components/FormWrapper";
 import {
   updateExhibitionMutation,
-  UpdateExhibitionParams
+  useUpdateExhibitionMutation
 } from "../../gql/mutations/ExhibitionMutations";
 import InputField from "../../components/InputField";
 import Layout from "../../layout";
+import styles from "./ExhibitionSetup.module.sass";
 
 interface Props {}
 
@@ -18,6 +19,7 @@ interface UpdateExhibitionRawParams {
 
 const ExhibitionSetup: React.FC<Props> = () => {
   const { data, loading, refetch } = useGetExhibitionQuery();
+  const { success, mutate, mutating } = useUpdateExhibitionMutation();
   const methods = useForm<UpdateExhibitionRawParams>();
   const {
     reset,
@@ -25,31 +27,48 @@ const ExhibitionSetup: React.FC<Props> = () => {
     formState: { isDirty }
   } = methods;
 
+  const exhibition = data?.getExhibition;
+
   useEffect(() => {
-    if (data?.getExhibition) {
-      reset({ title: data?.getExhibition.title });
+    if (exhibition) {
+      reset({ title: exhibition.title });
     }
-  }, [loading, data?.getExhibition]);
+  }, [loading, exhibition]);
 
   const onSubmit = useCallback(
     async ({ title, background }: UpdateExhibitionRawParams) => {
-      const res = await updateExhibitionMutation({
+      const res = await mutate({
         title,
-        background: background[0]
+        ...(background[0] ? { background: background[0] } : {})
       });
-      console.log({ res });
-      refetch();
+      if (res?.data.result.success && background[0]) {
+        location.reload();
+      } else {
+        refetch();
+      }
     },
     []
   );
 
   return (
     <Layout title="展覽設定">
+      {success && <div className="notification is-success">更新成功</div>}
       <FormWrapper {...methods} onSubmit={onSubmit}>
         <InputField label="展覽名稱" {...register("title")} />
         <InputField type="file" label="背景圖片" {...register("background")} />
-        <button type="submit" className="button is-success" disabled={!isDirty}>
-          儲存更改
+        {exhibition?.background ? (
+          <div className={styles.background}>
+            <img src={exhibition.background} />
+          </div>
+        ) : (
+          <p>無背景圖片</p>
+        )}
+        <button
+          type="submit"
+          className="button is-success"
+          disabled={!isDirty || mutating}
+        >
+          {mutating ? "更新中..." : "儲存更改"}
         </button>
       </FormWrapper>
     </Layout>

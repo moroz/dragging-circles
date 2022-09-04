@@ -29,11 +29,11 @@ export type Asset = Image | Video;
 
 export interface ArtworkAsset {
   id: ID;
-  priority: number;
+  position: number;
   asset: Asset;
 }
 
 export interface ArtworkAssetParams {
-  priority: number;
+  position: number;
   assetId: ID;
 }

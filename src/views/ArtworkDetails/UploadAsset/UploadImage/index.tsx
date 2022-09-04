@@ -1,9 +1,7 @@
 import clsx from "clsx";
 import React, { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
-import { useFormContext } from "react-hook-form";
 import AspectRatioBox from "../../../../components/AspectRatioBox";
-import Textarea from "../../../../components/Textarea";
 import readAsDataUrl from "../../../../helpers/readAsDataUrl";
 import { Artwork } from "../../../../interfaces/artwork";
 import { AssetType } from "../../../../interfaces/assets";
@@ -25,7 +23,6 @@ const UploadImage: React.FC<Props> = ({ setImage }) => {
   const [preview, setPreview] = useState<null | string>(null);
   const [error, setError] = useState(false);
   const [rejectedFiles, setRejectedFiles] = useState<FileRejection[]>([]);
-  const { register } = useFormContext();
 
   const onDrop = useCallback(
     async (files: File[], rejected: FileRejection[]) => {
@@ -91,11 +88,6 @@ const UploadImage: React.FC<Props> = ({ setImage }) => {
         ) : null}
       </div>
       <div className={styles.options}>
-        <Textarea
-          {...register("altText")}
-          label="圖片備用文字（alt text）"
-          helperText="用於圖片無法正常顯示時，以及無障礙工具使用者。"
-        />
         <button
           type="submit"
           disabled={!preview}

@@ -1,4 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
+import { useCallback, useState } from "react";
 import {
   Artwork,
   ArtworkInput,
@@ -105,7 +106,9 @@ export interface UpdateExhibitionMutationResult {
 export const updateExhibitionMutation = ({
   title,
   background
-}: UpdateExhibitionParams) => {
+}: UpdateExhibitionParams): Promise<{
+  data: UpdateExhibitionMutationResult;
+}> => {
   return new Promise((resolve, reject) => {
     const data = new FormData();
     data.append("query", UPDATE_EXHIBITION_MUTATION.loc!.source.body);
@@ -125,4 +128,28 @@ export const updateExhibitionMutation = ({
     xhr.addEventListener("error", reject);
     xhr.send(data);
   });
+};
+
+export const useUpdateExhibitionMutation = () => {
+  const [mutating, setMutating] = useState(false);
+  const [called, setCalled] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const [success, setSuccess] = useState(false);
+
+  const mutate = useCallback(async (params: UpdateExhibitionParams) => {
+    try {
+      setSuccess(false);
+      setCalled(true);
+      setMutating(true);
+      const res = await updateExhibitionMutation(params);
+      setMutating(false);
+      setSuccess(true);
+      return res;
+    } catch (e) {
+      setMutating(false);
+      setError(e);
+    }
+  }, []);
+
+  return { mutate, mutating, error, called, success };
 };

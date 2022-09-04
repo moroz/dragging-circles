@@ -5,4 +5,5 @@ export interface Exhibition {
   id: ID;
   title: string;
   artworks: Artwork[];
+  background: string | null;
 }

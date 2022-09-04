@@ -33,7 +33,7 @@ const ArtworkImages: React.FC<Props> = ({ artwork, refetch, onOpenModal }) => {
       variables: {
         artworkId: artwork.id,
         params: items.map((item, i) => ({
-          priority: i + 1,
+          position: i + 1,
           assetId: item.asset.id
         }))
       }
