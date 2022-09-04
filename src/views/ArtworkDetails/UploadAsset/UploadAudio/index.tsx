@@ -50,12 +50,17 @@ const UploadAudio: React.FC<Props> = ({ setFile, file }) => {
         className={clsx(styles.previewBox, styles.empty)}
         {...getRootProps()}
       >
-        <input {...getInputProps()} />
         <AspectRatioBox
-          ratio={1}
-          className={clsx(styles.previewImage, styles.empty)}
+          ratio="1"
+          className={clsx(styles.previewImage, !file && styles.empty)}
         >
-          <DropzonePlaceholder type={AssetType.Audio} />
+          {file ? (
+            <p className={styles.fileSelectedMessage}>已選擇音訊檔</p>
+          ) : (
+            <DropzonePlaceholder type={AssetType.Audio}>
+              <input {...getInputProps()} />
+            </DropzonePlaceholder>
+          )}
         </AspectRatioBox>
       </div>
       <div className={styles.options}>

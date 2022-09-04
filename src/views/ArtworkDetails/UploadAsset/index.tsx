@@ -50,13 +50,13 @@ const UploadAsset: React.FC<Props> = ({ show, onClose, artwork, refetch }) => {
     const { data } = await uploadArtworkImage({
       file: file!,
       artworkId: artwork.id,
-      type: AssetType.Image
+      type
     });
     if (data?.result.success) {
       onSuccess();
       return;
     }
-  }, [file, artwork.id]);
+  }, [file, artwork.id, type]);
 
   const onAddVideo = useCallback(async ({ videoId }: FormParams) => {
     const res = await mutate({ variables: { artworkId: artwork.id, videoId } });
