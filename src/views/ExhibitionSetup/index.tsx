@@ -2,10 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { useGetExhibitionQuery } from "../../gql/queries/ExhibitionQueries";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../components/FormWrapper";
-import {
-  updateExhibitionMutation,
-  useUpdateExhibitionMutation
-} from "../../gql/mutations/ExhibitionMutations";
+import { useUpdateExhibitionMutation } from "../../gql/mutations/ExhibitionMutations";
 import InputField from "../../components/InputField";
 import Layout from "../../layout";
 import styles from "./ExhibitionSetup.module.sass";

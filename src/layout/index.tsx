@@ -7,6 +7,8 @@ import Sidebar from "./Sidebar";
 import { Helmet } from "react-helmet";
 import clsx from "clsx";
 import { APP_NAME } from "../config";
+import { Role } from "../interfaces/users";
+import NotFound from "../views/NotFound";
 
 interface Props {
   children: React.ReactNode;
@@ -16,9 +18,11 @@ interface Props {
   header?: boolean;
   padding?: boolean;
   actions?: React.ReactNode;
+  admin?: boolean;
 }
 
 const Layout: React.FC<Props> = ({
+  admin = false,
   children,
   title,
   subtitle,
@@ -36,6 +40,10 @@ const Layout: React.FC<Props> = ({
 
   if (loading || !user) {
     return <Loader />;
+  }
+
+  if (!loading && admin && user?.role !== Role.Admin) {
+    return <NotFound />;
   }
 
   return (
