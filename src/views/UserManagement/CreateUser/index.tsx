@@ -9,15 +9,15 @@ import {
   useCreateUserMutation
 } from "../../../gql/mutations/UserMutations";
 import Layout from "../../../layout";
+import FormFields from "../FormFields";
 
 interface Props {}
 
 const NewUser: React.FC<Props> = () => {
   const methods = useForm<CreateUserParams>();
-  const { register, watch } = methods;
+  const { register } = methods;
   const [mutate] = useCreateUserMutation();
   const navigate = useNavigate();
-  const password = watch("password");
 
   const onSubmit = useCallback(async (params: CreateUserParams) => {
     const res = await mutate({ variables: { params } });
@@ -30,19 +30,7 @@ const NewUser: React.FC<Props> = () => {
     <Layout title="新增使用者" admin>
       <FormWrapper {...methods} onSubmit={onSubmit}>
         <InputField label="信箱" {...register("email")} autoFocus />
-        <InputField
-          label="設定密碼"
-          type="password"
-          {...register("password")}
-        />
-        <InputField
-          label="確認密碼"
-          type="password"
-          {...register("passwordConfirmation", {
-            validate: (value) =>
-              value && password && value !== password ? "密碼不相符" : true
-          })}
-        />
+        <FormFields />
         <div className="mb-3 field">
           <label className="label">角色</label>
           <div className="select">

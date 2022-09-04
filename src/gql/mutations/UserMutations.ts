@@ -38,3 +38,38 @@ export const useCreateUserMutation = () =>
   useMutation<CreateUserMutationResult, CreateUserMutationVariables>(
     CREATE_USER_MUTATION
   );
+
+export const UPDATE_USER_PASSWORD_MUTATION = gql`
+  mutation UpdateUserPassword(
+    $userId: ID!
+    $params: UpdateUserPasswordParams!
+  ) {
+    result: updateUserPassword(userId: $userId, params: $params) {
+      success
+      errors {
+        key
+        message
+      }
+    }
+  }
+`;
+
+export interface UpdateUserPasswordParams {
+  password: string;
+  passwordConfirmation: string;
+}
+
+export interface UpdateUserPasswordMutationResult {
+  result: MutationResult<User>;
+}
+
+export interface UpdateUserPasswordMutationVariables {
+  userId: ID;
+  params: UpdateUserPasswordParams;
+}
+
+export const useUpdateUserPasswordMutation = () =>
+  useMutation<
+    UpdateUserPasswordMutationResult,
+    UpdateUserPasswordMutationVariables
+  >(UPDATE_USER_PASSWORD_MUTATION);
