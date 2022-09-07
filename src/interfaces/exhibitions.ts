@@ -7,4 +7,5 @@ export interface Exhibition {
   active: boolean;
   artworks: Artwork[];
   background: string | null;
+  showTitle: boolean;
 }

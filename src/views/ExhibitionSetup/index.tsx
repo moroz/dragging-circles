@@ -12,6 +12,7 @@ interface Props {}
 
 interface UpdateExhibitionRawParams {
   title: string;
+  showTitle: boolean;
   background: FileList;
 }
 
@@ -29,14 +30,16 @@ const ExhibitionSetup: React.FC<Props> = () => {
 
   useEffect(() => {
     if (exhibition) {
-      reset({ title: exhibition.title });
+      const { title, showTitle } = exhibition;
+      reset({ title, showTitle });
     }
   }, [loading, exhibition]);
 
   const onSubmit = useCallback(
-    async ({ title, background }: UpdateExhibitionRawParams) => {
+    async ({ title, background, showTitle }: UpdateExhibitionRawParams) => {
       const res = await mutate({
         title,
+        showTitle,
         ...(background[0] ? { background: background[0] } : {})
       });
       if (res?.data.result.success && background[0]) {
@@ -61,6 +64,12 @@ const ExhibitionSetup: React.FC<Props> = () => {
         ) : (
           <p>無背景圖片</p>
         )}
+        <div className="field">
+          <label>
+            <input type="checkbox" {...register("showTitle")} />{" "}
+            在畫布上顯示展覽名稱
+          </label>
+        </div>
         <SubmitButton disabled={!isDirty || mutating}>
           {mutating ? "更新中..." : "儲存更改"}
         </SubmitButton>

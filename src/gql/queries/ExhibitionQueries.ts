@@ -6,6 +6,7 @@ export const GET_EXHIBITION_QUERY = gql`
     getExhibition: getActiveExhibition {
       id
       title
+      showTitle
       background(variant: THUMB_WEBP)
       artworks {
         id
