@@ -18,8 +18,10 @@ function ArtworkCanvas() {
   const { onDragStart, onDragEnd, onMouseMove, onMouseLeave, svgRef, onClick } =
     useDraggableCanvas();
 
+  const exhibition = data?.getExhibition;
+
   const onReset = useCallback(() => {
-    if (data?.getExhibition) reset(data.getExhibition);
+    exhibition && reset(exhibition);
   }, [data, reset]);
 
   useEffect(onReset, [loading, data]);
@@ -27,7 +29,7 @@ function ArtworkCanvas() {
   if (loading) return <LayoutLoader />;
 
   return (
-    <Layout title={`畫布：${data?.getExhibition?.title}`}>
+    <Layout title={`畫布：${exhibition?.title}`}>
       <div className={styles.root}>
         <svg
           ref={svgRef}
@@ -40,6 +42,10 @@ function ArtworkCanvas() {
           onClick={onClick}
           onMouseLeave={onMouseLeave}
         >
+          {exhibition?.background ? (
+            <image href={exhibition.background} width={800} />
+          ) : null}
+
           {state.exhibition?.artworks.map((artwork) => (
             <Shape
               mode={state.mode}

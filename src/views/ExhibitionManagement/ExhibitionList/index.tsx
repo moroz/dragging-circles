@@ -16,7 +16,7 @@ const ExhibitionList: React.FC<Props> = () => {
 
   const onSetActive = useCallback(({ id, title }: Exhibition) => {
     return async () => {
-      const confirmation = `您確定希望將「${title}」設為活躍展覽嗎？`;
+      const confirmation = `您確定希望將「${title}」設為公開展覽嗎？`;
       if (!confirm(confirmation)) return;
       await mutate({
         variables: { id },
@@ -41,7 +41,7 @@ const ExhibitionList: React.FC<Props> = () => {
       <table className="table is-bordered">
         <thead>
           <th>名稱</th>
-          <th>是否活躍展覽</th>
+          <th>是否公開展覽</th>
           <th></th>
         </thead>
         <tbody>
@@ -52,7 +52,7 @@ const ExhibitionList: React.FC<Props> = () => {
               <td>
                 {!e.active && (
                   <button type="button" onClick={onSetActive(e)}>
-                    設為活躍展覽
+                    設為公開展覽
                   </button>
                 )}
               </td>
