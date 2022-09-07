@@ -13,6 +13,7 @@ interface Props {}
 interface UpdateExhibitionRawParams {
   title: string;
   showTitle: boolean;
+  borderColor: string | null;
   background: FileList;
 }
 
@@ -30,16 +31,22 @@ const ExhibitionSetup: React.FC<Props> = () => {
 
   useEffect(() => {
     if (exhibition) {
-      const { title, showTitle } = exhibition;
-      reset({ title, showTitle });
+      const { title, showTitle, borderColor } = exhibition;
+      reset({ title, showTitle, borderColor });
     }
   }, [loading, exhibition]);
 
   const onSubmit = useCallback(
-    async ({ title, background, showTitle }: UpdateExhibitionRawParams) => {
+    async ({
+      title,
+      background,
+      showTitle,
+      borderColor
+    }: UpdateExhibitionRawParams) => {
       const res = await mutate({
         title,
         showTitle,
+        borderColor,
         ...(background[0] ? { background: background[0] } : {})
       });
       if (res?.data.result.success && background[0]) {
@@ -57,6 +64,11 @@ const ExhibitionSetup: React.FC<Props> = () => {
       <FormWrapper {...methods} onSubmit={onSubmit}>
         <InputField label="展覽名稱" {...register("title")} />
         <InputField type="file" label="背景圖片" {...register("background")} />
+        <InputField
+          type="color"
+          label="輪廓顏色"
+          {...register("borderColor")}
+        />
         {exhibition?.background ? (
           <div className={styles.background}>
             <img src={exhibition.background} />

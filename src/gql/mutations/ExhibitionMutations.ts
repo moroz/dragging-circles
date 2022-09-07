@@ -90,6 +90,7 @@ export const UPDATE_EXHIBITION_MUTATION = gql`
         title
         showTitle
         background
+        borderColor
       }
     }
   }
@@ -99,6 +100,7 @@ export interface UpdateExhibitionParams {
   title: string;
   showTitle: boolean;
   background?: File;
+  borderColor?: string | null;
 }
 
 export interface UpdateExhibitionMutationResult {
@@ -108,7 +110,8 @@ export interface UpdateExhibitionMutationResult {
 export const updateExhibitionMutation = ({
   title,
   background,
-  showTitle
+  showTitle,
+  borderColor
 }: UpdateExhibitionParams): Promise<{
   data: UpdateExhibitionMutationResult;
 }> => {
@@ -118,7 +121,12 @@ export const updateExhibitionMutation = ({
     data.append(
       "variables",
       JSON.stringify({
-        params: { title, showTitle, background: background && "image" }
+        params: {
+          title,
+          showTitle,
+          borderColor,
+          background: background && "image"
+        }
       })
     );
     if (background) {

@@ -8,4 +8,5 @@ export interface Exhibition {
   artworks: Artwork[];
   background: string | null;
   showTitle: boolean;
+  borderColor: string | null;
 }

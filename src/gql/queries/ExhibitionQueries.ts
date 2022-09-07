@@ -7,6 +7,7 @@ export const GET_EXHIBITION_QUERY = gql`
       id
       title
       showTitle
+      borderColor
       background(variant: THUMB_WEBP)
       artworks {
         id
