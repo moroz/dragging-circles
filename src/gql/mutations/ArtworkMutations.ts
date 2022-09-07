@@ -34,3 +34,28 @@ export const useUpdateArtworkMutation = () =>
   useMutation<UpdateArtworkMutationResult, UpdateArtworkMutationVariables>(
     UPDATE_ARTWORK_MUTATION
   );
+
+export const DELETE_ARTWORK_MUTATION = gql`
+  mutation DeleteArtwork($id: ID!) {
+    result: deleteArtwork(id: $id) {
+      success
+      errors {
+        key
+        message
+      }
+    }
+  }
+`;
+
+export interface DeleteArtworkMutationResult {
+  result: MutationResult<Artwork>;
+}
+
+export interface DeleteArtworkMutationVariables {
+  id: ID;
+}
+
+export const useDeleteArtworkMutation = () =>
+  useMutation<DeleteArtworkMutationResult, DeleteArtworkMutationVariables>(
+    DELETE_ARTWORK_MUTATION
+  );
