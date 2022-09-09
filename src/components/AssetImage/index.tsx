@@ -1,6 +1,7 @@
 import React from "react";
 import { youtubeThumbnailUrl } from "../../helpers/youtubeHelpers";
 import { Asset } from "../../interfaces/assets";
+import { ReactComponent as AudioIcon } from "../../assets/music.svg";
 
 interface Props {
   asset: Asset;
@@ -16,6 +17,13 @@ const AssetImage: React.FC<Props> = ({ asset, className }) => {
           alt={asset.altText ?? ""}
           className={className}
         />
+      );
+    case "Audio":
+      return (
+        <div>
+          <AudioIcon className={className} />
+          <audio controls src={asset.downloadUrl} />
+        </div>
       );
     case "Video":
       return (

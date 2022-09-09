@@ -22,6 +22,10 @@ export const ARTWORK_DETAILS = gql`
           id
           videoId
         }
+        ... on Audio {
+          id
+          downloadUrl
+        }
       }
     }
   }
