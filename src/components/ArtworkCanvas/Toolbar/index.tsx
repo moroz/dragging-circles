@@ -60,7 +60,7 @@ const Toolbar: React.FC<Props> = ({ onReset }) => {
           disabled={state.dirty}
           className="button is-success"
         >
-          {state.mode === CanvasReducerMode.Creating ? "取消新增" : "新增藝品"}
+          {state.mode === CanvasReducerMode.Creating ? "取消新增" : "新增作品"}
         </button>
       ) : null}
       <div>{MODE_TO_MESSAGE[state.mode]}</div>

@@ -21,7 +21,10 @@ export const CanvasReducer: Reducer<CanvasReducerState, CanvasReducerAction> = (
         ...state,
         exhibition: action.data,
         dirty: false,
-        mode: CanvasReducerMode.Standby
+        mode:
+          state.mode === CanvasReducerMode.Creating
+            ? CanvasReducerMode.Creating
+            : CanvasReducerMode.Standby
       };
     }
 
