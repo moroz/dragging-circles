@@ -30,7 +30,7 @@ const ArtworkDetails: React.FC<Props> = () => {
   const artwork = data?.artwork;
   if (!artwork) return <NotFound />;
 
-  const title = `編輯藝術作品：${artwork.title}`;
+  const title = `編輯作品：${artwork.title}`;
 
   return (
     <Layout

@@ -63,11 +63,16 @@ const ExhibitionSetup: React.FC<Props> = () => {
       {success && <div className="notification is-success">更新成功</div>}
       <FormWrapper {...methods} onSubmit={onSubmit}>
         <InputField label="展覽名稱" {...register("title")} />
-        <InputField type="file" label="背景圖片" {...register("background")} />
         <InputField
           type="color"
           label="輪廓顏色"
           {...register("borderColor")}
+        />
+        <InputField
+          type="file"
+          label="背景圖片"
+          helperText="比例：16:9，最佳尺寸為 1920&times;1080 像素。"
+          {...register("background")}
         />
         {exhibition?.background ? (
           <div className={styles.background}>
