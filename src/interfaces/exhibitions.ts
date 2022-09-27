@@ -4,6 +4,7 @@ import { ID } from "./common";
 export interface Exhibition {
   id: ID;
   title: string;
+  titlePosition?: number | null;
   active: boolean;
   artworks: Artwork[];
   background: string | null;

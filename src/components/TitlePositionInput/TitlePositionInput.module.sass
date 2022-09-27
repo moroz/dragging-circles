@@ -1,0 +1,24 @@
+.fieldset
+  display: grid
+  grid-template-columns: repeat(3, 30px)
+  grid-template-rows: repeat(3, 30px)
+  gap: 10px
+
+  input
+    appearance: none
+
+    &::after
+      content: ''
+      display: block
+      width: 30px
+      height: 30px
+      background: #757575
+
+    &:checked
+      &::after
+        background: blue
+
+.label
+  display: block
+  font-weight: bold
+  margin-bottom: .5rem

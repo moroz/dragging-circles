@@ -91,6 +91,7 @@ export const UPDATE_EXHIBITION_MUTATION = gql`
         showTitle
         background
         borderColor
+        titlePosition
       }
     }
   }
@@ -101,6 +102,7 @@ export interface UpdateExhibitionParams {
   showTitle: boolean;
   background?: File;
   borderColor?: string | null;
+  titlePosition?: number | null;
 }
 
 export interface UpdateExhibitionMutationResult {
@@ -111,7 +113,8 @@ export const updateExhibitionMutation = ({
   title,
   background,
   showTitle,
-  borderColor
+  borderColor,
+  titlePosition
 }: UpdateExhibitionParams): Promise<{
   data: UpdateExhibitionMutationResult;
 }> => {
@@ -125,6 +128,7 @@ export const updateExhibitionMutation = ({
           title,
           showTitle,
           borderColor,
+          titlePosition: titlePosition ? Number(titlePosition) : null,
           background: background && "image"
         }
       })
