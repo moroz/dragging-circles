@@ -9,6 +9,7 @@ export const GET_EXHIBITION_QUERY = gql`
       showTitle
       titlePosition
       borderColor
+      fontColor
       background(variant: THUMB_WEBP)
       artworks {
         id

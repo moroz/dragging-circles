@@ -10,4 +10,5 @@ export interface Exhibition {
   background: string | null;
   showTitle: boolean;
   borderColor: string | null;
+  fontColor: string | null;
 }

@@ -15,6 +15,7 @@ interface UpdateExhibitionRawParams {
   title: string;
   showTitle: boolean;
   borderColor: string | null;
+  fontColor: string | null;
   background: FileList;
   titlePosition?: string;
 }
@@ -35,11 +36,13 @@ const ExhibitionSetup: React.FC<Props> = () => {
 
   useEffect(() => {
     if (exhibition) {
-      const { title, showTitle, borderColor, titlePosition } = exhibition;
+      const { title, showTitle, borderColor, titlePosition, fontColor } =
+        exhibition;
       reset({
         title,
         showTitle,
         borderColor,
+        fontColor,
         titlePosition: titlePosition ? String(titlePosition) : undefined
       });
     }
@@ -51,12 +54,14 @@ const ExhibitionSetup: React.FC<Props> = () => {
       background,
       showTitle,
       borderColor,
+      fontColor,
       titlePosition
     }: UpdateExhibitionRawParams) => {
       const res = await mutate({
         title,
         showTitle,
         borderColor,
+        fontColor,
         titlePosition: titlePosition ? Number(titlePosition) : null,
         ...(background[0] ? { background: background[0] } : {})
       });
@@ -79,6 +84,7 @@ const ExhibitionSetup: React.FC<Props> = () => {
           label="輪廓顏色"
           {...register("borderColor")}
         />
+        <InputField type="color" label="字體顏色" {...register("fontColor")} />
         <div className={styles.backgroundGroup}>
           <div>
             <InputField

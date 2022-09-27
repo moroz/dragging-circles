@@ -102,6 +102,7 @@ export interface UpdateExhibitionParams {
   showTitle: boolean;
   background?: File;
   borderColor?: string | null;
+  fontColor?: string | null;
   titlePosition?: number | null;
 }
 
@@ -114,6 +115,7 @@ export const updateExhibitionMutation = ({
   background,
   showTitle,
   borderColor,
+  fontColor,
   titlePosition
 }: UpdateExhibitionParams): Promise<{
   data: UpdateExhibitionMutationResult;
@@ -128,6 +130,7 @@ export const updateExhibitionMutation = ({
           title,
           showTitle,
           borderColor,
+          fontColor,
           titlePosition: titlePosition ? Number(titlePosition) : null,
           background: background && "image"
         }
