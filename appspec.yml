@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /tmp/deploy/dashboard
+
+hooks:
+  AfterInstall:
+    - location: scripts/copy-release.sh
+      # This does not mean running as "some user," it's the actual username on the production system
+      runas: user
+    - location: scripts/restart-docker-services.sh
+      runas: root

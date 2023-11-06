@@ -1,0 +1,18 @@
+version: '0.2'
+
+phases:
+  install:
+    commands: 
+      - npm i -g pnpm
+      - pnpm install --frozen-lockfile
+
+  build:
+    commands:
+      - pnpm build
+
+artifacts:
+  files:
+    - 'dist/**/*'
+    - appspec.yml
+    - scripts/copy-release.sh
+    - scripts/restart-docker-services.sh
