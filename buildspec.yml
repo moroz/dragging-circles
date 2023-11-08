@@ -8,6 +8,7 @@ phases:
 
   build:
     commands:
+      - export VITE_BASE_PATH="/admin"
       - pnpm build
 
 artifacts:
